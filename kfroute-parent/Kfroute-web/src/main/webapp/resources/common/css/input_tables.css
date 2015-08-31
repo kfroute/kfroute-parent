@@ -1,0 +1,15 @@
+/*  ====================================================  */
+/*  = 信息录入样式 ==================  */
+/*  ==================================================== #cccccc */
+#device_import{
+	margin-bottom:50px;
+}
+.input-table{
+	 border-bottom: 1px solid #ddd;
+}
+tr.highlight {
+    background-color: #DCDFE3 !important;
+}
+tr.highlight_choose {
+    background-color: #D8F0EF !important;
+}

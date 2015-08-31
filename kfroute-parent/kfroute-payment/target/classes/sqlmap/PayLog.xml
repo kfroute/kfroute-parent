@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE sqlMap PUBLIC "-//iBATIS.com//DTD SQL Map 2.0//EN" "http://ibatis.apache.org/dtd/sql-map-2.dtd">
+
+<sqlMap namespace="PayLogInfo">
+	<typeAlias alias="PayLogInfo" type="cn.seocoo.platform.payment.PayLog" />
+	
+	<insert id="savePayLogInfo" parameterClass="PayLogInfo">
+		INSERT INTO tb_seocoo_order_pay_log
+		  (
+		   orderNumber,
+		   platformOrderNumber,
+		   msg,
+		   payType,
+		   createDate,
+		   url
+		   )
+		VALUES
+		  (
+		   #orderNumber#,
+		   #platformOrderNumber#,
+		   #msg#,
+		   #payType#,
+		   #createDate#,
+		   #url#
+		   )
+	</insert>
+	
+	<update id="updatePayLogInfo" parameterClass="PayLogInfo">
+		update tb_seocoo_order_pay_log
+		<dynamic prepend="set">
+			<isNotEmpty prepend=" , " property="msg">
+				msg = #msg#
+			</isNotEmpty>
+			<isNotEmpty prepend=" , " property="payType">
+				payType = #payType#
+			</isNotEmpty>
+			<isNotEmpty prepend=" , " property="createDate">
+				createDate = #createDate#
+			</isNotEmpty>
+			<isNotEmpty prepend=" , " property="url">
+				url = #url#
+			</isNotEmpty>
+		</dynamic>
+		<dynamic prepend="where">
+			<isNotEmpty prepend=" and " property="orderNumber">
+				orderNumber = #orderNumber#
+	        </isNotEmpty>
+	        <isNotEmpty prepend=" and " property="platformOrderNumber">
+				platformOrderNumber = #platformOrderNumber#
+	        </isNotEmpty>
+		</dynamic>
+	</update>
+	
+	<select id="findPayLogInfo" parameterClass="PayLogInfo" resultClass="PayLogInfo">
+		select * from tb_seocoo_order_pay_log
+		<dynamic prepend="where">
+			<isNotEmpty prepend=" and " property="orderNumber">
+				orderNumber = #orderNumber#
+	      </isNotEmpty>
+	      <isNotEmpty prepend=" and " property="platformOrderNumber">
+				platformOrderNumber = #platformOrderNumber#
+	      </isNotEmpty>
+		</dynamic>
+	</select>
+	
+</sqlMap>

@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:aop="http://www.springframework.org/schema/aop"
+	xmlns:tx="http://www.springframework.org/schema/tx"
+	xsi:schemaLocation="
+			http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-2.5.xsd
+			http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop-2.5.xsd
+			http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx-2.5.xsd"
+			default-autowire="byName" default-lazy-init="true">
+			
+		<bean id="demoDao" class="cn.seocoo.platform.payment.demo.dao.impl.DemoDaoImpl" parent="entityManagerImpl" />
+		<bean id="systemConfigDao" class="cn.seocoo.platform.payment.systemconfig.dao.impl.SystemConfigDaoImpl" parent="entityManagerImpl"></bean>
+		<bean id="payDao" class="cn.seocoo.platform.payment.server.dao.impl.PayDaoImpl" parent="entityManagerImpl"></bean>
+		<bean id="payInfoDao" class="cn.seocoo.platform.payment.server.dao.impl.PayInfoDaoImpl" parent="entityManagerImpl"></bean>
+		<bean id="payLogDao" class="cn.seocoo.platform.payment.server.dao.impl.PayLogDaoImpl" parent="entityManagerImpl"></bean>
+		<bean id="paymentEntityDao" class="cn.seocoo.platform.payment.paymentEntity.dao.impl.PaymentEntityDaoImpl" parent="entityManagerImpl"></bean>
+		<bean id="merchantPaymentDao" class="cn.seocoo.platform.payment.merchantPayment.dao.impl.MerchantPaymentDaoImpl" parent="entityManagerImpl"></bean>
+		<bean id="paymentAccountDao" class="cn.seocoo.platform.payment.paymentAccount.dao.impl.PaymentAccountDaoImpl" parent="entityManagerImpl"></bean>
+		<bean id="shortMsgDao" class="cn.seocoo.platform.payment.shortMsg.dao.impl.ShortMsgDaoImpl" parent="entityManagerImpl"></bean>
+		<bean id="merchantDao" class="cn.seocoo.platform.payment.merchant.dao.impl.MerchantDaoImpl" parent="entityManagerImpl" ></bean>
+		<bean id="latnDao" class="cn.seocoo.platform.payment.latn.dao.impl.LatnDaoImpl" parent="entityManagerImpl"></bean>
+		
+		
+</beans>

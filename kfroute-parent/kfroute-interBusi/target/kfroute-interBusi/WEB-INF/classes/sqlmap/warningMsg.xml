@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE sqlMap PUBLIC "-//iBATIS.com//DTD SQL Map 2.0//EN" "http://ibatis.apache.org/dtd/sql-map-2.dtd">
+
+<sqlMap namespace="warningMsg">
+	<typeAlias alias="warningMsg" type="cn.melinkr.platform.kfroute.WarningMsg" />
+	<resultMap id="warningMsgMap" class="warningMsg">
+		<result column="warning_id" property="warningId" />
+		<result column="warning_entity" property="warningEntity" />
+		<result column="warning_type" property="warningType" />
+		<result column="warning_code" property="warningCode" />
+		<result column="warning_msg" property="warningMsg" />
+		<result column="warning_level" property="warningLevel" />
+		<result column="warning_time" property="warningTime" />
+		<result column="resolve_flag" property="resolveFlag" />
+		<result column="resolve_time" property="resolveTime" />
+		<result column="resolve_note" property="resolveNote" />
+		<result column="resolve_by" property="resolveBy" />
+	</resultMap>
+	
+	<insert id="insertWarningMsg" parameterClass="warningMsg">
+		INSERT INTO wwarningmsg
+		  (
+		   	warning_code,
+		   	warning_entity,
+			warning_msg,
+			warning_type,
+			warning_level,
+			warning_time,
+			resolve_flag,
+			resolve_time,
+			resolve_note,
+			resolve_by
+		   )
+		VALUES
+		  (
+			#warningCode#,
+			#warningEntity#,
+			#warningMsg#,
+			#warningType#,
+			#warningLevel#,
+			#warningTime#,
+			#resolveFlag#,
+			#resolveTime#,
+			#resolveNote#,
+			#resolveBy#
+		   )
+	</insert>
+	<select id="findAllWarningMsg" parameterClass="Map" resultMap="warningMsgMap">
+		select  a.*
+		from ssourseservportmsg a
+	</select>
+	
+</sqlMap>

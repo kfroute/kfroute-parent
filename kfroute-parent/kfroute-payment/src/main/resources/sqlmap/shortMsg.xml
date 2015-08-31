@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE sqlMap PUBLIC "-//iBATIS.com//DTD SQL Map 2.0//EN" "http://ibatis.apache.org/dtd/sql-map-2.dtd">
+
+<sqlMap namespace="shortMsg">
+	<typeAlias alias="ShortMsg" type="cn.seocoo.platform.payment.ShortMsg" />
+
+	<select id="queryAll" resultClass="ShortMsg" parameterClass="java.lang.String">
+		select * from tb_seocoo_short_msg where merchantCode=#merchantCode#
+	</select>
+
+	<select id="query" parameterClass="ShortMsg" resultClass="ShortMsg">
+		select * from tb_seocoo_short_msg where id=#id#
+	</select>
+	
+	
+	<update id="update" parameterClass="ShortMsg">
+		update tb_seocoo_short_msg
+		<dynamic prepend="set">
+			<isNotEmpty prepend=" , " property="merchantCode">
+				merchantCode = #merchantCode#
+		</isNotEmpty>
+			<isNotEmpty prepend=" , " property="shortMsg">
+				shortMsg = #shortMsg#
+		</isNotEmpty>
+			<isNotEmpty prepend=" , " property="creatDate">
+				creatDate = #creatDate#
+	      </isNotEmpty>
+	      	<isNotEmpty prepend=" , " property="updateDate">
+				updateDate = #updateDate#
+	      </isNotEmpty>
+	      	<isNotEmpty prepend=" , " property="msgName">
+				msgName = #msgName#
+	      </isNotEmpty>
+	      	<isNotEmpty prepend=" , " property="status">
+				status = #status#
+	      </isNotEmpty>
+		</dynamic>
+		where id = #id#
+	</update>
+	
+	<insert id="insert" parameterClass="ShortMsg">
+		insert into tb_seocoo_short_msg(merchantCode,shortMsg,creatDate,updateDate,msgName,status)
+			 values(#merchantCode#,#shortMsg#,#creatDate#,#updateDate#,#msgName#,#status#)
+	</insert>
+	
+	<delete id="delete" parameterClass="ShortMsg">
+		delete from tb_seocoo_short_msg
+		<dynamic prepend="where">
+		  <isNotEmpty prepend=" and " property="id">
+				id = #id#
+	      </isNotEmpty>
+		</dynamic>
+	</delete>
+	
+	<update id="updateStatus" parameterClass="java.lang.String">
+		update tb_seocoo_short_msg set status=0 where merchantCode=#merchantCode#
+	</update>
+	
+
+</sqlMap>

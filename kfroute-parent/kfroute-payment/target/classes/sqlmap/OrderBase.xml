@@ -1,0 +1,204 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE sqlMap PUBLIC "-//iBATIS.com//DTD SQL Map 2.0//EN" "http://ibatis.apache.org/dtd/sql-map-2.dtd">
+
+<sqlMap namespace="OrderBase">
+	<typeAlias alias="OrderBase" type="cn.seocoo.platform.payment.PayOrderBase" />
+	
+	<insert id="saveOrderBase" parameterClass="OrderBase">
+		INSERT INTO tb_seocoo_pay_order_base
+		  (
+		   orderNumber,
+		   totalPrice,
+		   orderPrice,
+		   bankCode,
+		   bankName,
+		   channel,
+		   orderType,
+		   payment,
+		   status,
+		   orderDate,
+		   orderRemark,
+		   userId,
+		   userName,
+		   userType,
+		   openId,
+		   latnId,
+		   areaId,
+		   couponCode,
+		   couponType,
+		   couponAmount,
+		   recommend,
+		   callBackUrl,
+		   backStatus,
+		   merchantCode,
+		   platformOrderNumber
+		   )
+		VALUES
+		  (
+		   #orderNumber#,
+		   #totalPrice#,
+		   #orderPrice#,
+		   #bankCode#,
+		   #bankName#,
+		   #channel#,
+		   #orderType#,
+		   #payment#,
+		   #status#,
+		   #orderDate#,
+		   #orderRemark#,
+		   #userId#,
+		   #userName#,
+		   #userType#,
+		   #openId#,
+		   #latnId#,
+		   #areaId#,
+		   #couponCode#,
+		   #couponType#,
+		   #couponAmount#,
+		   #recommend#,
+		   #callBackUrl#,
+		   #backStatus#,
+		   #merchantCode#,
+		   #platformOrderNumber#
+		   )
+	</insert>
+	
+	<select id="query" parameterClass="OrderBase" resultClass="OrderBase">
+		select * from tb_seocoo_pay_order_base
+		<dynamic prepend="where">
+			<isNotEmpty prepend=" and " property="id">
+				id = #id#
+	      </isNotEmpty>
+		 <isNotEmpty prepend=" and " property="orderNumber">
+				orderNumber = #orderNumber#
+	      </isNotEmpty>
+	      <isNotEmpty prepend=" and " property="platformOrderNumber">
+				platformOrderNumber = #platformOrderNumber#
+	      </isNotEmpty>
+	      <isNotEmpty prepend=" and " property="bankCode">
+				bankCode = #bankCode#
+	      </isNotEmpty>
+	      <isNotEmpty prepend=" and " property="merchantCode">
+				merchantCode = #merchantCode#
+	      </isNotEmpty>
+		</dynamic>
+	</select>
+	
+	
+	<select id="queryOrderStatus" parameterClass="java.util.Map" resultClass="OrderBase">
+		select a.* from(
+			select * from tb_seocoo_pay_order_base
+			<dynamic prepend="where">
+				<isNotEmpty prepend=" and " property="orderNumberList">
+				      orderNumber in
+		               <iterate property="orderNumberList" open="(" close=")" conjunction=",">
+							<![CDATA[
+			                    	#orderNumberList[]#   
+			            		]]>
+						</iterate>
+				 </isNotEmpty>
+			 </dynamic>
+		 ) as a 
+		 <dynamic prepend="where">
+			<isNotEmpty prepend=" and " property="merchantCodeList">
+			      a.merchantCode in
+	               <iterate property="merchantCodeList" open="(" close=")" conjunction=",">
+						<![CDATA[
+		                    	#merchantCodeList[]#   
+		            		]]>
+					</iterate>
+			 </isNotEmpty>
+		 </dynamic>
+	</select>
+	
+	
+	<update id="updateOrderBase" parameterClass="OrderBase">
+		update tb_seocoo_pay_order_base
+		<dynamic prepend="set">
+			<isNotEmpty prepend=" , " property="totalPrice">
+				totalPrice = #totalPrice#
+			</isNotEmpty>
+			<isNotEmpty prepend=" , " property="orderPrice">
+				orderPrice = #orderPrice#
+			</isNotEmpty>
+			<isNotEmpty prepend=" , " property="bankCode">
+				bankCode = #bankCode#
+			</isNotEmpty>
+			<isNotEmpty prepend=" , " property="bankName">
+				bankName = #bankName#
+			</isNotEmpty>
+			<isNotEmpty prepend=" , " property="channel">
+				channel = #channel#
+			</isNotEmpty>
+			<isNotEmpty prepend=" , " property="orderType">
+				orderType = #orderType#
+			</isNotEmpty>
+			<isNotEmpty prepend=" , " property="payment">
+				payment = #payment#
+			</isNotEmpty>
+			<isNotEmpty prepend=" , " property="status">
+				status = #status#
+			</isNotEmpty>
+			<isNotEmpty prepend=" , " property="orderDate">
+				orderDate = #orderDate#
+	     	 </isNotEmpty>
+	      	 <isNotEmpty prepend=" , " property="orderRemark">
+				orderRemark = #orderRemark#
+	     	 </isNotEmpty>
+	      	 <isNotEmpty prepend=" , " property="userId">
+				userId = #userId#
+	     	 </isNotEmpty>
+	       	 <isNotEmpty prepend=" , " property="userName">
+				userName = #userName#
+	     	 </isNotEmpty>
+	      	 <isNotEmpty prepend=" , " property="userType">
+				userType = #userType#
+	         </isNotEmpty>
+	         <isNotEmpty prepend=" , " property="openId">
+				openId = #openId#
+	         </isNotEmpty>
+	         <isNotEmpty prepend=" , " property="latnId">
+				latnId = #latnId#
+	         </isNotEmpty>
+	         <isNotEmpty prepend=" , " property="merchantName">
+				merchantName = #merchantName#
+	         </isNotEmpty>
+	         <isNotEmpty prepend=" , " property="areaId">
+				areaId = #areaId#
+	         </isNotEmpty>
+	         <isNotEmpty prepend=" , " property="couponCode">
+				couponCode = #couponCode#
+	         </isNotEmpty>
+	         <isNotEmpty prepend=" , " property="couponType">
+				couponType = #couponType#
+	         </isNotEmpty>
+	         <isNotEmpty prepend=" , " property="couponAmount">
+				couponAmount = #couponAmount#
+	         </isNotEmpty>
+	         <isNotEmpty prepend=" , " property="recommend">
+				recommend = #recommend#
+	         </isNotEmpty>
+	         <isNotEmpty prepend=" , " property="callBackUrl">
+				callBackUrl = #callBackUrl#
+	         </isNotEmpty>
+	         <isNotEmpty prepend=" , " property="backStatus">
+				backStatus = #backStatus#
+	         </isNotEmpty>
+	         <isNotEmpty prepend=" , " property="platformOrderNumber">
+				platformOrderNumber = #platformOrderNumber#
+	         </isNotEmpty>
+		</dynamic>
+		<dynamic prepend="where">
+			<isNotEmpty prepend=" and " property="orderNumber">
+				orderNumber = #orderNumber#
+	        </isNotEmpty>
+	        <isNotEmpty prepend=" and " property="platformOrderNumber">
+				platformOrderNumber = #platformOrderNumber#
+	        </isNotEmpty>
+	        <isNotEmpty prepend=" and " property="merchantCode">
+				merchantCode = #merchantCode#
+	        </isNotEmpty>
+		</dynamic>
+	</update>
+	
+</sqlMap>

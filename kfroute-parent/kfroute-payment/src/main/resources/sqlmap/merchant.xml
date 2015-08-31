@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE sqlMap PUBLIC "-//iBATIS.com//DTD SQL Map 2.0//EN" "http://ibatis.apache.org/dtd/sql-map-2.dtd">
+
+<sqlMap namespace="merchant">
+	<typeAlias alias="Merchant" type="cn.seocoo.platform.payment.MerchantEntity" />
+
+	<select id="queryAll" resultClass="Merchant">
+		select * from tb_seocoo_merchant
+	</select>
+
+	<select id="query" parameterClass="Merchant" resultClass="Merchant">
+		select * from tb_seocoo_merchant
+		<dynamic prepend="where">
+			<isNotEmpty prepend=" and " property="id">
+				id = #id#
+	      </isNotEmpty>
+		 <isNotEmpty prepend=" and " property="merchantCode">
+				merchantCode = #merchantCode#
+	      </isNotEmpty>
+		</dynamic>
+	</select>
+	
+	
+	
+	<update id="update" parameterClass="Merchant">
+		update tb_seocoo_merchant
+		<dynamic prepend="set">
+			<isNotEmpty prepend=" , " property="merchantCode">
+				merchantCode = #merchantCode#
+		</isNotEmpty>
+			<isNotEmpty prepend=" , " property="merchantName">
+				merchantName = #merchantName#
+		</isNotEmpty>
+			<isNotEmpty prepend=" , " property="merchantAddr">
+				merchantAddr = #merchantAddr#
+		</isNotEmpty>
+			<isNotEmpty prepend=" , " property="linkInfo">
+				linkInfo = #linkInfo#
+		</isNotEmpty>
+			<isNotEmpty prepend=" , " property="status">
+				status = #status#
+		</isNotEmpty>
+			<isNotEmpty prepend=" , " property="manage">
+				manage = #manage#
+		</isNotEmpty>
+			<isNotEmpty prepend=" , " property="latnId">
+				latnId = #latnId#
+		</isNotEmpty>
+			<isNotEmpty prepend=" , " property="provinceId">
+				provinceId = #provinceId#
+		</isNotEmpty>
+		</dynamic>
+		where id = #id#
+	</update>
+	
+	<insert id="insert" parameterClass="Merchant">
+		insert into tb_seocoo_merchant(merchantCode,merchantName,merchantAddr,linkInfo,status,manage,latnId,provinceId)
+			 values(#merchantCode#,#merchantName#,#merchantAddr#,#linkInfo#,#status#,#manage#,#latnId#,#provinceId#)
+	</insert>
+	
+	<delete id="delete" parameterClass="Merchant">
+		delete from tb_seocoo_merchant
+		<dynamic prepend="where">
+		  <isNotEmpty prepend=" and " property="id">
+				id = #id#
+	      </isNotEmpty>
+		</dynamic>
+	</delete>
+	
+
+</sqlMap>

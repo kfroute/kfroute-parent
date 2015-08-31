@@ -1,0 +1,118 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE sqlMap PUBLIC "-//iBATIS.com//DTD SQL Map 2.0//EN" "http://ibatis.apache.org/dtd/sql-map-2.dtd">
+
+<sqlMap namespace="paymentAccount">
+	<typeAlias alias="PaymentAccount" type="cn.seocoo.platform.payment.PaymentAccount" />
+
+	<select id="queryAll" resultClass="PaymentAccount">
+		select * from tb_seocoo_payment_account
+	</select>
+
+	<select id="query" parameterClass="PaymentAccount" resultClass="PaymentAccount">
+		select * from tb_seocoo_payment_account
+		<dynamic prepend="where">
+			<isNotEmpty prepend=" and " property="id">
+				id = #id#
+	      </isNotEmpty>
+			<isNotEmpty prepend=" and " property="paymentAccount">
+				paymentAccount = #paymentAccount#
+	      </isNotEmpty>
+			<isNotEmpty prepend=" and " property="merchantCode">
+				merchantCode = #merchantCode#
+	      </isNotEmpty>
+	      <isNotEmpty prepend=" and " property="bankCode">
+				bankCode = #bankCode#
+	      </isNotEmpty>
+		</dynamic>
+	</select>
+	
+	
+	<update id="update" parameterClass="PaymentAccount">
+		update tb_seocoo_payment_account
+		<dynamic prepend="set">
+	      	<isNotEmpty prepend=" , " property="relationAccount">
+				relationAccount = #relationAccount#
+	      </isNotEmpty>
+	      	<isNotEmpty prepend=" , " property="bankCode">
+				bankCode = #bankCode#
+	      </isNotEmpty>
+	      	<isNotEmpty prepend=" , " property="bankName">
+				bankName = #bankName#
+	      </isNotEmpty>
+	      	<isNotEmpty prepend=" , " property="security">
+				security = #security#
+	      </isNotEmpty>
+	      	<isNotEmpty prepend=" , " property="bankUrl">
+				bankUrl = #bankUrl#
+	      </isNotEmpty>
+	      	<isNotEmpty prepend=" , " property="banktDesc">
+				banktDesc = #banktDesc#
+	      </isNotEmpty>
+	      	<isNotEmpty prepend=" , " property="merchantCode">
+				merchantCode = #merchantCode#
+	      </isNotEmpty>
+	      	<isNotEmpty prepend=" , " property="merchantName">
+				merchantName = #merchantName#
+	      </isNotEmpty>
+	      	<isNotEmpty prepend=" , " property="status">
+				status = #status#
+	      </isNotEmpty>
+	      	<isNotEmpty prepend=" , " property="paymentType">
+				paymentType = #paymentType#
+	      </isNotEmpty>
+	      	<isNotEmpty prepend=" , " property="fee">
+				fee = #fee#
+	      </isNotEmpty>
+	      	<isNotEmpty prepend=" , " property="reduceFee">
+				reduceFee = #reduceFee#
+	      </isNotEmpty>
+	      	<isNotEmpty prepend=" , " property="counterFee">
+				counterFee = #counterFee#
+	      </isNotEmpty>
+	      <isNotEmpty prepend=" , " property="notifyUrl">
+				notifyUrl = #notifyUrl#
+	      </isNotEmpty>
+	      <isNotEmpty prepend=" , " property="callBackUrl">
+				callBackUrl = #callBackUrl#
+	      </isNotEmpty>
+	      <isNotEmpty prepend=" , " property="merchantUrl">
+				merchantUrl = #merchantUrl#
+	      </isNotEmpty>
+	      <isNotEmpty prepend=" , " property="returnUrl">
+				returnUrl = #returnUrl#
+	      </isNotEmpty>
+	      <isNotEmpty prepend=" , " property="errorNotifyUrl">
+				errorNotifyUrl = #errorNotifyUrl#
+	      </isNotEmpty>
+	      <isNotEmpty prepend=" , " property="payPartner">
+				payPartner = #payPartner#
+	      </isNotEmpty>
+	       <isNotEmpty prepend=" , " property="payPaternerKey">
+				payPaternerKey = #payPaternerKey#
+	      </isNotEmpty>
+	       <isNotEmpty prepend=" , " property="appkey">
+				appkey = #appkey#
+	      </isNotEmpty>
+	       <isNotEmpty prepend=" , " property="appId">
+				appId = #appId#
+	      </isNotEmpty>
+		</dynamic>
+		where paymentAccount = #paymentAccount#
+	</update>
+	
+	<insert id="insert" parameterClass="PaymentAccount">
+		insert into tb_seocoo_payment_account(paymentAccount,relationAccount,bankCode,bankName,security,bankUrl,banktDesc,merchantCode,merchantName,status,paymentType,fee,reduceFee,counterFee,notifyUrl,callBackUrl,merchantUrl,returnUrl,errorNotifyUrl,payPartner,payPaternerKey,appkey,appId)
+			 values(#paymentAccount#,#relationAccount#,#bankCode#,#bankName#,#security#,#bankUrl#,#banktDesc#,#merchantCode#,#merchantName#,#status#,#paymentType#,#fee#,#reduceFee#,#counterFee#,#notifyUrl#,#callBackUrl#,#merchantUrl#,#returnUrl#,#errorNotifyUrl#,#payPartner#,#payPaternerKey#,#appkey#,#appId#)	
+	</insert>
+	
+	<delete id="delete" parameterClass="PaymentAccount">
+		delete from tb_seocoo_payment_account
+		<dynamic prepend="where">
+		  <isNotEmpty prepend=" and " property="id">
+				id = #id#
+	      </isNotEmpty>
+		</dynamic>
+	</delete>
+	
+
+</sqlMap>

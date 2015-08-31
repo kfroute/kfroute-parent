@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:util="http://www.springframework.org/schema/util"
+       xmlns:aop="http://www.springframework.org/schema/aop"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xsi:schemaLocation="
+       http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+       http://www.springframework.org/schema/util http://www.springframework.org/schema/util/spring-util.xsd
+       http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop.xsd"
+	   default-autowire="byName"  default-lazy-init="true">
+
+	<description>Shiro安全配置</description>
+
+	<!-- 扫描 --> 
+	<!-- Shiro's main business-tier object for web-enabled applications -->
+	<bean id="securityManager" class="org.apache.shiro.web.mgt.DefaultWebSecurityManager">
+		<property name="realm" ref="shiroDbRealm" />
+		<property name="cacheManager" ref="shiroEhcacheManager" />
+	</bean>
+	
+	<!-- 項目自定义的Realm -->
+	<bean id="shiroDbRealm" class="com.melinkr.micro.shiro.SSORealm">
+	</bean>
+	
+	<!-- 用户授权信息Cache, 采用EhCache，需要的话就配置上此信息 -->
+    <bean id="shiroEhcacheManager" class="org.apache.shiro.cache.ehcache.EhCacheManager">
+        <property name="cacheManagerConfigFile" value="classpath:spring/security/ehcache-shiro.xml" />
+    </bean>
+
+	<!-- Shiro Filter -->
+	<bean id="shiroFilter" class="com.melinkr.micro.shiro.SSOShiroFilterFactoryBean">
+		<property name="securityManager" ref="securityManager" />
+
+		<property name="loginUrl" value="http://114.215.154.119:8091/sso?service=http://114.215.154.119:8087/payment" />
+		<property name="successUrl" value="/" />
+		<property name="filterChainDefinitions">
+			<value>
+				/captcha-image.do = anon
+				/resources/** = anon
+				/static/** = anon
+				/pay/** = anon
+				/service/** = anon
+				/anon/** = anon
+				/** = user	
+			</value>
+		</property>
+	</bean>
+	<bean id="lifecycleBeanPostProcessor" class="org.apache.shiro.spring.LifecycleBeanPostProcessor" />
+	
+	<bean id="authRemoteService" class="com.melinkr.micro.auth.service.AuthRemoteService" />
+	<bean id="authRemoteAction" class="cn.melinkr.platform.shiro.AuthRemoteAction" />
+</beans>

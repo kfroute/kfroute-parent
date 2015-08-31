@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:aop="http://www.springframework.org/schema/aop"
+	xmlns:tx="http://www.springframework.org/schema/tx"
+	xsi:schemaLocation="
+			http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-2.5.xsd
+			http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop-2.5.xsd
+			http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx-2.5.xsd"
+			default-autowire="byName" default-lazy-init="true">
+			
+			<bean id="demoAction" class="cn.seocoo.platform.payment.demo.action.DemoAction" scope="prototype" />
+			<bean id="homeAction" class="cn.seocoo.platform.payment.server.action.HomeAction" scope="prototype" />
+			<bean id="systemConfigAction" class="cn.seocoo.platform.payment.systemconfig.action.SystemConfigAction" scope="prototype" />
+			<bean id="indexAction" class="cn.seocoo.platform.payment.index.IndexAction" scope="prototype"></bean>
+			
+			<bean id="paymentAction" class="cn.seocoo.platform.payment.pay.action.PaymentAction" scope="prototype"></bean>
+			<bean id="paymentEntityAction" class="cn.seocoo.platform.payment.paymentEntity.action.PaymentEntityAction" scope="prototype"></bean>
+			<bean id="merchantPaymentAction" class="cn.seocoo.platform.payment.merchantPayment.action.MerchantPaymentAction" scope="prototype"></bean>
+			<bean id="paymentAccountAction" class="cn.seocoo.platform.payment.paymentAccount.action.PaymentAccountAction" scope="prototype"></bean>
+			<bean id="shortMsgAction" class="cn.seocoo.platform.payment.shortMsg.action.ShortMsgAction" scope="prototype"></bean>
+			<bean id="merchantAction" class="cn.seocoo.platform.payment.merchant.action.MerchantAction" scope="prototype"></bean>
+			<bean id="latnAction" class="cn.seocoo.platform.payment.latn.action.LatnAction" scope="prototype"></bean>
+			
+			
+</beans>

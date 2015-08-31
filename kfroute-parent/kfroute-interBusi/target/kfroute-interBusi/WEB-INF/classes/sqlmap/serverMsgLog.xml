@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE sqlMap PUBLIC "-//iBATIS.com//DTD SQL Map 2.0//EN" "http://ibatis.apache.org/dtd/sql-map-2.dtd">
+
+<sqlMap namespace="serverMsgLog">
+	<typeAlias alias="wSourceServerSyslog" type="cn.melinkr.platform.kfroute.ServerSysLog" />
+	<typeAlias alias="wSourceServerPortSyslog" type="cn.melinkr.platform.kfroute.ServerPortSysLog" />
+	
+	<insert id="insertServersyslog" parameterClass="wSourceServerSyslog">
+		INSERT INTO wserversyslog
+		  (
+		   	s_log_id,
+			server_id,
+			server_ip,
+			cpu_status,
+			mem_status,
+			disk_status,
+			current_conn_num,
+			total_incoming,
+			total_outgoing,
+			prev_total_incoming,
+			prev_total_outgoing,
+			circle_total_incoming,
+			circle_total_outgoing,
+			process_status,
+			process_detail
+		   )
+		VALUES
+		  (
+		   	#slogId#,
+			#serverId#,
+			#serverIp#,
+			#cpuStatus#,
+			#memStatus#,
+			#diskStatus#,
+			#currentConnNum#,
+			#totalIncoming#,
+			#totalOutgoing#,
+			#prevTotalIncoming#,
+			#prevTotalOutgoing#,
+			#circleTotalIncoming#,
+			#circleTotalOutgoing#,
+			#processStatus#,
+			#processDetail#
+
+		   )
+	</insert>
+	<insert id="insertServerPortsyslog" parameterClass="wSourceServerPortSyslog">
+		INSERT INTO wserverportsyslog
+		  (
+		   	s_log_id,
+			server_id,
+			server_ip,
+			server_port,
+			port_total_incoming,
+			port_total_outgoing,
+			port_prev_total_incoming,
+			port_prev_total_outgoing,
+			port_circle_total_incoming,
+			port_circle_total_outgoing
+		   )
+		VALUES
+		  (
+		   	#slogId#,
+			#serverId#,
+			#serverIp#,
+			#serverPort#,
+			#portTotalIncoming#,
+			#portTotalOutgoing#,
+			#portPrevTotalIncoming#,
+			#portPrevTotalOutgoing#,
+			#portCircleTotalIncoming#,
+			#portCircleTotalOutgoing#
+
+		   )
+	</insert>
+	
+	
+</sqlMap>

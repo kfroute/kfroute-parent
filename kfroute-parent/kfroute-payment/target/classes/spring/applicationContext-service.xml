@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:aop="http://www.springframework.org/schema/aop"
+	xmlns:tx="http://www.springframework.org/schema/tx"
+	xsi:schemaLocation="
+			http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-2.5.xsd
+			http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop-2.5.xsd
+			http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx-2.5.xsd"
+			default-autowire="byName" default-lazy-init="true">
+			
+		<bean id="demoService" class="cn.seocoo.platform.payment.demo.service.impl.DemoServiceImpl" />
+		<bean id="systemConfigService" class="cn.seocoo.platform.payment.systemconfig.service.impl.SystemConfigServiceImpl"></bean>
+		<bean id="payService" class="cn.seocoo.platform.payment.server.service.impl.PayServiceImpl" />
+		<bean id="paymentEntityService" class="cn.seocoo.platform.payment.paymentEntity.service.impl.PaymentEntityServiceImpl"></bean>
+		<bean id="merchantPaymentService" class="cn.seocoo.platform.payment.merchantPayment.service.impl.MerchantPaymentServiceImpl"></bean>
+		<bean id="paymentAccountService" class="cn.seocoo.platform.payment.paymentAccount.service.impl.PaymentAccountServiceImpl"></bean>
+		<bean id="shortMsgService" class="cn.seocoo.platform.payment.shortMsg.service.impl.ShortMsgServiceImpl"></bean>
+		<bean id="merchantService" class="cn.seocoo.platform.payment.merchant.service.impl.MerchantServiceImpl"></bean>
+		<bean id="latnService" class="cn.seocoo.platform.payment.latn.service.impl.LatnServiceImpl"></bean>
+		
+		<!-- 支付 -->
+		<bean id="aliPayWapPaymentService" class="cn.seocoo.platform.payment.pay.service.impl.AliPayWapPaymentService"  ></bean>
+		<bean id="aliPayPaymentService" class="cn.seocoo.platform.payment.pay.service.impl.AliPayPaymentService"  ></bean>
+		<bean id="paymentDispatcher" class="cn.seocoo.platform.payment.pay.service.impl.PaymentDispatcherImpl"></bean>
+		<bean id="payLogService" class="cn.seocoo.platform.payment.server.service.impl.PayLogServiceImpl"></bean>
+		<bean id="payOrderService" class="cn.seocoo.platform.payment.server.service.impl.PayOrderServiceImpl"></bean>
+		<bean id="payGeneralService" class="cn.seocoo.platform.payment.server.service.impl.PayGeneralServiceImpl"></bean>
+		
+		
+		
+</beans>
+

@@ -1,0 +1,537 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE sqlMap PUBLIC "-//iBATIS.com//DTD SQL Map 2.0//EN" "http://ibatis.apache.org/dtd/sql-map-2.dtd">
+
+<sqlMap namespace="routerManage">
+	<typeAlias alias="routerMsg" type="cn.melinkr.platform.kfroute.RouterMsg" />
+	<typeAlias alias="routerMsgHis" type="cn.melinkr.platform.kfroute.RouterMsgHis" />
+	<typeAlias alias="chnGroupMsg" type="com.melinkr.micro.auth.entity.ChnGroupMsg" />
+	<resultMap id="routerMsgMap" class="routerMsg">
+		<result column="r_id_no" property="rIdNo" />
+		<result column="mac" property="mac" />
+		<result column="model_type" property="modelType" />
+		<result column="version" property="version" />
+		<!-- <result column="sys_status" property="sysStatus"/> <result column="active_time" 
+			property="activeTime"/> -->
+
+		<result column="group_id" property="groupId" />
+		<result column="group_name" property="groupName" />
+		<result column="belong_type" property="belongType" />
+		<result column="chip_model" property="chipModel" />
+		<result column="basic_freq" property="basicFreq" />
+		<result column="ram" property="ram" />
+		<result column="flash" property="flash" />
+		<result column="brand_name" property="brandName" />
+		<result column="flash" property="flash" />
+		<!-- <result column="resource_id_no" property="resourceIdNo"/> <result 
+			column="resourcePort" property="resourcePort"/> -->
+		<result column="update_timestamp" property="updateTimestamp" />
+		<result column="update_obj" property="updateObj" />
+		<result column="create_timestamp" property="createTimestamp" />
+		<result column="create_by" property="createBy" />
+		<result column="create_accept" property="createAccept" />
+		<result column="note" property="note" />
+		<result column="op_note" property="opNote" />
+
+	</resultMap>
+
+	<insert id="insertBatchDevice" parameterClass="routerMsg">
+		INSERT INTO
+		droutermsg
+		(
+		mac,
+		model_type,
+		version,
+		group_id,
+		belong_type,
+		chip_model,
+		basic_freq,
+		ram,
+		flash,
+		brand_name,
+		update_timestamp,
+		update_obj,
+		create_timestamp,
+		create_by,
+		create_accept,
+		note,
+		op_note
+
+		)
+		VALUES
+		(
+		#mac#,
+		#modelType#,
+		#version#,
+		#groupId#,
+		#belongType#,
+		#chipModel#,
+		#basicFreq#,
+		#ram#,
+		#flash#,
+		#brandName#,
+		#updateTimestamp#,
+		#updateObj#,
+		#createTimestamp#,
+		#createBy#,
+		#createAccept#,
+		#note#,
+		#opNote#
+		)
+	</insert>
+	<insert id="insertDeviceHis" parameterClass="routerMsgHis">
+		INSERT INTO
+		droutermsghis
+		(
+		r_id_no,
+		mac,
+		model_type,
+		version,
+		group_id,
+		belong_type,
+		chip_model,
+		basic_freq,
+		ram,
+		flash,
+		brand_name,
+		update_timestamp,
+		update_obj,
+		create_timestamp,
+		create_by,
+		create_accept,
+		note,
+		op_note,
+		his_note,
+		his_by,
+		his_time,
+		his_type
+
+		)
+		VALUES
+		(
+		#routerMsg.rIdNo#,
+		#routerMsg.mac#,
+		#routerMsg.modelType#,
+		#routerMsg.version#,
+		#routerMsg.groupId#,
+		#routerMsg.belongType#,
+		#routerMsg.chipModel#,
+		#routerMsg.basicFreq#,
+		#routerMsg.ram#,
+		#routerMsg.flash#,
+		#routerMsg.brandName#,
+		#routerMsg.updateTimestamp#,
+		#routerMsg.updateObj#,
+		#routerMsg.createTimestamp#,
+		#routerMsg.createBy#,
+		#routerMsg.createAccept#,
+		#routerMsg.note#,
+		#routerMsg.opNote#,
+		#hisNote#,
+		#hisBy#,
+		#hisTime#,
+		#hisType#
+		)
+	</insert>
+	<insert id="insertDeviceHisByMap" parameterClass="Map">
+		INSERT INTO
+		droutermsghis
+		(
+		r_id_no,
+		mac,
+		model_type,
+		version,
+		group_id,
+		belong_type,
+		chip_model,
+		basic_freq,
+		ram,
+		flash,
+		brand_name,
+		update_timestamp,
+		update_obj,
+		create_timestamp,
+		create_by,
+		create_accept,
+		note,
+		op_note,
+		his_note,
+		his_by,
+		his_time,
+		his_type
+
+		)
+		select 
+		r_id_no,
+		mac,
+		model_type,
+		version,
+		group_id,
+		belong_type,
+		chip_model,
+		basic_freq,
+		ram,
+		flash,
+		brand_name,
+		update_timestamp,
+		update_obj,
+		create_timestamp,
+		create_by,
+		create_accept,
+		note,
+		op_note,
+		#hisNote#,
+		#hisBy#,
+		#hisTime#,
+		#hisType#
+		 from droutermsg where mac = #mac#
+	</insert>
+	<insert id="insertDeviceHisByIdList" parameterClass="Map">
+		INSERT INTO
+		droutermsghis
+		(
+		r_id_no,
+		mac,
+		model_type,
+		version,
+		group_id,
+		belong_type,
+		chip_model,
+		basic_freq,
+		ram,
+		flash,
+		brand_name,
+		update_timestamp,
+		update_obj,
+		create_timestamp,
+		create_by,
+		create_accept,
+		note,
+		op_note,
+		his_note,
+		his_by,
+		his_time,
+		his_type
+
+		)
+		select 
+		r_id_no,
+		mac,
+		model_type,
+		version,
+		group_id,
+		belong_type,
+		chip_model,
+		basic_freq,
+		ram,
+		flash,
+		brand_name,
+		update_timestamp,
+		update_obj,
+		create_timestamp,
+		create_by,
+		create_accept,
+		note,
+		op_note,
+		#hisNote#,
+		#hisBy#,
+		#hisTime#,
+		#hisType#
+		 from droutermsg where r_id_no in($idList$)
+	</insert>
+	<select id="findDeviceListCount" parameterClass="Map"
+		resultClass="java.lang.Integer">
+		select count(*) from droutermsg a left join ssobase.dchngroupmsg b
+		on
+		a.group_id = b.group_id
+		<dynamic prepend="where">
+			<isNotEmpty prepend=" and " property="routerMsg.mac">
+				mac = #routerMsg.mac#
+			</isNotEmpty>
+			<isNotEmpty prepend=" and " property="routerMsg.modelType">
+				model_type =
+				#routerMsg.modelType#
+	      </isNotEmpty>
+			<isNotEmpty prepend=" and " property="routerMsg.version">
+				version =
+				#routerMsg.version#
+	      </isNotEmpty>
+			<isNotEmpty prepend=" and " property="routerMsg.chipModel">
+				chip_model =
+				#routerMsg.chipModel#
+	      </isNotEmpty>
+			<isNotEmpty prepend=" and " property="routerMsg.belongType">
+				(belong_type =
+				#routerMsg.belongType# or #routerMsg.belongType#=0)
+	      </isNotEmpty>
+			<isNotEmpty prepend=" and " property="routerMsg.groupId">
+				a.group_id =
+				#routerMsg.groupId#
+	      </isNotEmpty>
+			<isNotEmpty prepend=" and " property="routerMsg.basicFreq">
+				basic_freq =
+				#routerMsg.basicFreq#
+	      </isNotEmpty>
+			<isNotEmpty prepend=" and " property="routerMsg.ram">
+				ram = #routerMsg.ram#
+			</isNotEmpty>
+			<isNotEmpty prepend=" and " property="routerMsg.flash">
+				flash =
+				#routerMsg.flash#
+	      </isNotEmpty>
+			<isNotEmpty prepend=" and " property="routerMsg.flash">
+				brand_name =
+				#routerMsg.brandName#
+	      </isNotEmpty>
+			<isNotEmpty prepend=" and " property="startTimestamp">
+	     	 create_timestamp &gt;=
+				STR_TO_DATE(#startTimestamp#,'%Y-%m-%d')
+
+			</isNotEmpty>
+			<isNotEmpty prepend=" and " property="endTimestamp">
+	        create_timestamp &lt;
+				STR_TO_DATE(#endTimestamp#,'%Y-%m-%d') 
+
+			</isNotEmpty>
+		</dynamic>
+	</select>
+	<select id="findDeviceListFilterCount" parameterClass="Map"
+		resultClass="java.lang.Integer">
+		select count(*) from droutermsg a left join ssobase.dchngroupmsg b
+		on
+		a.group_id = b.group_id
+		<dynamic prepend="where">
+			<isNotEmpty prepend=" and " property="routerMsg.mac">
+				mac = #routerMsg.mac#
+			</isNotEmpty>
+			<isNotEmpty prepend=" and " property="routerMsg.modelType">
+				model_type =
+				#routerMsg.modelType#
+	      </isNotEmpty>
+			<isNotEmpty prepend=" and " property="routerMsg.version">
+				version =
+				#routerMsg.version#
+	      </isNotEmpty>
+			<isNotEmpty prepend=" and " property="routerMsg.chipModel">
+				chip_model =
+				#routerMsg.chipModel#
+	      </isNotEmpty>
+			<isNotEmpty prepend=" and " property="routerMsg.belongType">
+				(belong_type =
+				#routerMsg.belongType# or #routerMsg.belongType#=0)
+	      </isNotEmpty>
+			<isNotEmpty prepend=" and " property="routerMsg.groupId">
+				a.group_id =
+				#routerMsg.groupId#
+	      </isNotEmpty>
+			<isNotEmpty prepend=" and " property="routerMsg.basicFreq">
+				basic_freq =
+				#routerMsg.basicFreq#
+	      </isNotEmpty>
+			<isNotEmpty prepend=" and " property="routerMsg.ram">
+				ram = #routerMsg.ram#
+			</isNotEmpty>
+			<isNotEmpty prepend=" and " property="routerMsg.flash">
+				flash =
+				#routerMsg.flash#
+	      </isNotEmpty>
+			<isNotEmpty prepend=" and " property="routerMsg.flash">
+				brand_name =
+				#routerMsg.brandName#
+	      </isNotEmpty>
+			<isNotEmpty prepend=" and " property="startTimestamp">
+	     	create_timestamp &gt;=
+				STR_TO_DATE(#startTimestamp#,'%Y-%m-%d')
+
+			</isNotEmpty>
+			<isNotEmpty prepend=" and " property="endTimestamp">
+	         create_timestamp &lt;
+				STR_TO_DATE(#endTimestamp#,'%Y-%m-%d')
+			</isNotEmpty>
+			<isNotEmpty prepend=" and " property="search">
+				$search$
+	      </isNotEmpty>
+
+		</dynamic>
+	</select>
+	<select id="findDeviceList" parameterClass="Map" resultMap="routerMsgMap">
+		select a.*,b.group_name from droutermsg a left join
+		ssobase.dchngroupmsg b
+		on a.group_id = b.group_id
+		<dynamic prepend="where">
+			<isNotEmpty prepend=" and " property="routerMsg.mac">
+				mac = #routerMsg.mac#
+			</isNotEmpty>
+			<isNotEmpty prepend=" and " property="routerMsg.modelType">
+				model_type =
+				#routerMsg.modelType#
+	      </isNotEmpty>
+			<isNotEmpty prepend=" and " property="routerMsg.version">
+				version =
+				#routerMsg.version#
+	      </isNotEmpty>
+			<isNotEmpty prepend=" and " property="routerMsg.chipModel">
+				chip_model =
+				#routerMsg.chipModel#
+	      </isNotEmpty>
+			<isNotEmpty prepend=" and " property="routerMsg.belongType">
+				(belong_type =
+				#routerMsg.belongType# or #routerMsg.belongType#=0)
+	      </isNotEmpty>
+			<isNotEmpty prepend=" and " property="routerMsg.groupId">
+				a.group_id =
+				#routerMsg.groupId#
+	      </isNotEmpty>
+			<isNotEmpty prepend=" and " property="routerMsg.basicFreq">
+				basic_freq =
+				#routerMsg.basicFreq#
+	      </isNotEmpty>
+			<isNotEmpty prepend=" and " property="routerMsg.ram">
+				ram = #routerMsg.ram#
+			</isNotEmpty>
+			<isNotEmpty prepend=" and " property="routerMsg.flash">
+				flash =
+				#routerMsg.flash#
+	      </isNotEmpty>
+			<isNotEmpty prepend=" and " property="routerMsg.flash">
+				brand_name =
+				#routerMsg.brandName#
+	      </isNotEmpty>
+			<isNotEmpty prepend=" and " property="startTimestamp">
+	     	create_timestamp &gt;=
+				STR_TO_DATE(#startTimestamp#,'%Y-%m-%d')
+
+			</isNotEmpty>
+			<isNotEmpty prepend=" and " property="endTimestamp">
+	        create_timestamp &lt;
+				STR_TO_DATE(#endTimestamp#,'%Y-%m-%d') 
+			</isNotEmpty>
+			<isNotEmpty prepend=" and " property="search">
+				$search$
+		    </isNotEmpty>
+		</dynamic>
+		<dynamic prepend="">
+			<isNotEmpty prepend=" " property="order">
+				order by $order$
+			</isNotEmpty>
+
+		</dynamic>
+
+		limit #pageSize# offset #offset#;
+	</select>
+	<select id="findDevice" parameterClass="Map" resultMap="routerMsgMap">
+		select a.*,b.group_name from droutermsg a left join
+		ssobase.dchngroupmsg b
+		on a.group_id = b.group_id
+		<dynamic prepend="where">
+			<isNotEmpty prepend=" and " property="routerMsg.mac">
+				mac = #routerMsg.mac#
+			</isNotEmpty>
+			<isNotEmpty prepend=" and " property="routerMsg.modelType">
+				model_type =
+				#routerMsg.modelType#
+	      </isNotEmpty>
+			<isNotEmpty prepend=" and " property="routerMsg.version">
+				version =
+				#routerMsg.version#
+	      </isNotEmpty>
+			<isNotEmpty prepend=" and " property="routerMsg.chipModel">
+				chip_model =
+				#routerMsg.chipModel#
+	      </isNotEmpty>
+			<isNotEmpty prepend=" and " property="routerMsg.belongType">
+				(belong_type =
+				#routerMsg.belongType# or #routerMsg.belongType#=0)
+	      </isNotEmpty>
+			<isNotEmpty prepend=" and " property="routerMsg.groupId">
+				a.group_id =
+				#routerMsg.groupId#
+	      </isNotEmpty>
+			<isNotEmpty prepend=" and " property="routerMsg.basicFreq">
+				basic_freq =
+				#routerMsg.basicFreq#
+	      </isNotEmpty>
+			<isNotEmpty prepend=" and " property="routerMsg.ram">
+				ram = #routerMsg.ram#
+			</isNotEmpty>
+			<isNotEmpty prepend=" and " property="routerMsg.flash">
+				flash =
+				#routerMsg.flash#
+	      </isNotEmpty>
+			<isNotEmpty prepend=" and " property="routerMsg.flash">
+				brand_name =
+				#routerMsg.brandName#
+	      </isNotEmpty>
+			<isNotEmpty prepend=" and " property="startTimestamp">
+	     	create_timestamp &gt;=
+				STR_TO_DATE(#startTimestamp#,'%Y-%m-%d')
+
+			</isNotEmpty>
+			<isNotEmpty prepend=" and " property="endTimestamp">
+	        create_timestamp &lt;
+				STR_TO_DATE(#endTimestamp#,'%Y-%m-%d') 
+			</isNotEmpty>
+			
+		</dynamic>
+		
+	</select>
+	<select id="findGroupIdByName" parameterClass="Map" resultClass="chnGroupMsg">
+		select group_id as groupId,group_name as groupName from
+		ssobase.dchngroupmsg
+		where group_name = #groupName#
+	</select>
+	<update id="updateDeviceMsg" parameterClass="routerMsg">
+		update droutermsg
+		<dynamic prepend="set">
+			<isNotEmpty prepend=" , " property="modelType">model_type =
+				#modelType#</isNotEmpty>
+			<isNotEmpty prepend=" , " property="version">version =
+				#version#</isNotEmpty>
+			<isNotEmpty prepend=" , " property="chipModel">chip_model =
+				#chipModel#</isNotEmpty>
+			<isNotEmpty prepend=" , " property="belongType">belong_type =
+				#belongType#</isNotEmpty>
+			<isNotEmpty prepend=" , " property="groupId">group_id =
+				#groupId#</isNotEmpty>
+			<isNotEmpty prepend=" , " property="basicFreq">basic_freq = #basicFreq#
+			</isNotEmpty>
+			<isNotEmpty prepend=" , " property="ram">ram = #ram#</isNotEmpty>
+			<isNotEmpty prepend=" , " property="flash">flash = #flash#</isNotEmpty>
+			<isNotEmpty prepend=" , " property="brandName">brand_name = #brandName#</isNotEmpty>
+			<isNotEmpty prepend=" , " property="opNote">op_note = #opNote#</isNotEmpty>
+		</dynamic>
+		where mac = #mac# or r_id_no=#rIdNo#
+	</update>
+	<update id="updateBatchDeviceMsg" parameterClass="Map">
+		update droutermsg
+		<dynamic prepend="set">
+			<isNotEmpty prepend=" , " property="routerMsg.modelType">model_type =
+				#routerMsg.modelType#</isNotEmpty>
+			<isNotEmpty prepend=" , " property="routerMsg.version">version =
+				#routerMsg.version#</isNotEmpty>
+			<isNotEmpty prepend=" , " property="routerMsg.chipModel">chip_model =
+				#routerMsg.chipModel#</isNotEmpty>
+			<isNotEmpty prepend=" , " property="routerMsg.belongType">belong_type =
+				#routerMsg.belongType#</isNotEmpty>
+			<isNotEmpty prepend=" , " property="routerMsg.groupId">group_id =
+				#routerMsg.groupId#</isNotEmpty>
+			<isNotEmpty prepend=" , " property="routerMsg.basicFreq">basic_freq = #routerMsg.basicFreq#
+			</isNotEmpty>
+			<isNotEmpty prepend=" , " property="routerMsg.ram">ram = #routerMsg.ram#</isNotEmpty>
+			<isNotEmpty prepend=" , " property="routerMsg.flash">flash = #routerMsg.flash#</isNotEmpty>
+			<isNotEmpty prepend=" , " property="routerMsg.brandName">brand_name = #routerMsg.brandName#</isNotEmpty>
+			<isNotEmpty prepend=" , " property="routerMsg.updateObj">update_obj = #routerMsg.updateObj#</isNotEmpty>
+			<isNotEmpty prepend=" , " property="routerMsg.opNote">op_note = #routerMsg.opNote#</isNotEmpty>
+		</dynamic>
+		where r_id_no in($idList$)
+	</update>
+	<update id="delDevice" parameterClass="routerMsg">
+		delete from droutermsg
+		where mac = #mac#
+	</update>
+	<select id="findDeviceByIdList" parameterClass="Map" resultMap="routerMsgMap">
+		select a.*,b.group_name from droutermsg a left join
+		ssobase.dchngroupmsg b
+		on a.group_id = b.group_id where a.r_id_no in($deviceList$)
+		
+	</select>
+</sqlMap>

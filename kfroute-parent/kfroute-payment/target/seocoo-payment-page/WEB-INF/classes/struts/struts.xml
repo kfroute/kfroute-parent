@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE struts PUBLIC
+    "-//Apache Software Foundation//DTD Struts Configuration 2.0//EN"
+    "http://struts.apache.org/dtds/struts-2.0.dtd">
+
+<struts>
+	<include file="struts-default.xml" />
+	<!-- 
+		这是一个重要的地方，很多人在使用<s:include>子页面后，发现子页面乱码，怎么改都不行，原因就在次，struts2的默认编码为UTF-8，乱码的同志请看看你的jsp页面上的编码是不是和这个不一致呢。只要把这里和jsp编码改一致就行了
+    	<constant name="struts.i18n.encoding" value="UTF-8" />
+	 -->
+	<constant name="struts.custom.i18n.resources" value="Messages" />
+	<constant name="struts.objectFactory" value="spring" />
+	<!-- 指定spring框架的装配模式 -->
+	<constant name="struts.objectFactory.spring.autoWire" value="name" />
+
+	<constant name="struts.enable.DynamicMethodInvocation" value="true" />
+	<constant name="struts.action.extension" value="do,action" />
+	<!-- For Development Phase -->
+	<constant name="struts.devMode" value="${struts.devMode}" />
+	<constant name="struts.serve.static.browserCache" value="false" />
+	<constant name="struts.i18n.reload" value="true" />
+	<!-- 10M = 1*1024*1024*1024 = 1073741824 -->
+	<constant name="struts.multipart.maxSize" value="1073741824" />
+	<constant name="struts.ui.theme" value="simple" />
+	<constant name="struts.multipart.saveDir" value="/tmp" />
+	<constant name="struts.ognl.allowStaticMethodAccess" value="true" />
+	<constant name="struts.convention.package.locators" value="controller"/>
+	<package name="default" namespace="/" extends="struts-default">
+
+		<!-- 默认全局拦截器 -->
+
+	</package>
+
+	<!-- module struts config -->
+	<include file="struts/struts-demo.xml" />
+	<include file="struts/struts-shiro.xml" />
+	<include file="struts/struts-home.xml" />
+	<include file="struts/struts-payment.xml" />
+	<include file="struts/struts-paymentEntity.xml" />
+	<include file="struts/struts-merchantPayment.xml"></include>
+	<include file="struts/struts-paymentAccount.xml"></include>
+	<include file="struts/struts-shortMsg.xml"></include>
+	<include file="struts/struts-merchant.xml"></include>
+	<include file="struts/struts-latn.xml"></include>
+	
+</struts>

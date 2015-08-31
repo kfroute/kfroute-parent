@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:aop="http://www.springframework.org/schema/aop"
+	xmlns:tx="http://www.springframework.org/schema/tx"
+	xsi:schemaLocation="
+			http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-2.5.xsd
+			http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop-2.5.xsd
+			http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx-2.5.xsd"
+			default-autowire="byName" default-lazy-init="true">
+			
+			<!-- 
+		<bean id="demoDao" class="cn.seocoo.platform.service.demo.dao.impl.DemoDaoImpl" parent="entityManagerImpl" />
+		 -->
+		<bean id="systemConfigDao" class="cn.melinkr.kfrouteWeb.service.systemconfig.dao.impl.SystemConfigDaoImpl" parent="entityManagerImpl"></bean>
+		<bean id="uploadDao" class="cn.melinkr.kfrouteWeb.business.dao.impl.UploadDaoImpl" parent="entityManagerImpl"></bean>
+		<bean id="commonDao" class="cn.melinkr.kfrouteWeb.business.dao.impl.CommonDaoImpl" parent="entityManagerImpl"></bean>
+		<bean id="m1310Dao" class="cn.melinkr.kfrouteWeb.business.m1310.dao.impl.M1310DaoImpl" parent="entityManagerImpl"></bean>
+		<bean id="m1320Dao" class="cn.melinkr.kfrouteWeb.business.m1320.dao.impl.M1320DaoImpl" parent="entityManagerImpl"></bean>
+		<bean id="m1320ActiveDao" class="cn.melinkr.kfrouteWeb.business.m1320.dao.impl.M1320ActiveDaoImpl" parent="baseDao"></bean>
+</beans>

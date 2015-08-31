@@ -1,0 +1,96 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE struts PUBLIC
+    "-//Apache Software Foundation//DTD Struts Configuration 2.0//EN"
+    "http://struts.apache.org/dtds/struts-2.0.dtd">
+
+<struts>
+ 
+
+	<package name="m1320" extends="default" namespace="/m1320">
+		
+		<action name="main" method="main" class="m1320Action">
+			<result name="success">/pages/m1320/m1320_main.jsp</result>
+		</action>
+		<!-- 下载模板文件 -->
+		<action name="*_downloadModel" method="{1}DownloadModel" class="uploadAction">
+			<result name="success">/pages/demo/demo.jsp</result>
+			<result name="fail">/pages/demo/demo.jsp</result>
+		</action>
+		<!-- 下载导入详情 -->
+		<action name="*_downloadUploadDetail" method="{1}DownloadUploadDetail" class="uploadAction">
+			<result name="success">/pages/demo/demo.jsp</result>
+			<result name="fail">/pages/demo/demo.jsp</result>
+		</action>
+		<!-- 删除上传文件 -->
+		<action name="*_delUploadFile" method="{1}DelUploadFile" class="uploadAction">
+			<result name="success">/pages/demo/demo.jsp</result>
+			<result name="fail">/pages/demo/demo.jsp</result>
+		</action>
+		<action name="*_uploadAndCheck" method="{1}UploadAndCheck" class="uploadAction">
+			<result name="success">/pages/demo/demo.jsp</result>
+			<result name="fail">/pages/demo/demo.jsp</result>
+			<!-- 配置fileUpload拦截器 -->  
+            <interceptor-ref name="fileUpload">  
+                <!-- 配置允许上传的文件类型-->  
+                <param name="allowedTypes">image/x-ms-bmp,image/jpeg,image/gif,image/png,image/x-png,application/excel,application/vnd.ms-excel,text/xml,application/vnd.openxmlformats-officedocument.spreadsheetml.sheet,application/vnd.ms-excel.sheet.macroEnabled.12</param>   
+                <!-- 配置允许上传的文件大小 -->  
+                <param name="maximumSize">4194304</param>  
+            </interceptor-ref>  
+            <interceptor-ref name="defaultStack"></interceptor-ref>  
+            <!-- 配置上传文件的保存的相对路径 -->  
+            <param name="savePath">/resources/upload</param>  
+		</action>
+		
+		<!-- 执行导入操作-->
+		<action name="doServerImp" method="doServerImp" class="m1320Action">
+			<result name="success">/pages/m1320/m1320_main_imp_success.jsp</result>
+			<result name="fail">/pages/error/error_m1320.jsp</result>
+		</action>
+		<!-- 查询操作-->
+		<action name="queryServer" method="queryServer" class="m1320Action">
+			<result name="success">/pages/demo/demo.jsp</result>
+			<result name="fail">/pages/error/error.jsp</result>
+		</action>
+		
+		<!-- 服务器激活操作 -->
+		<action name="activeServer" method="activeServer" class="m1320ActiveAction">
+			<result name="success">/pages/demo/demo.jsp</result>
+			<result name="fail">/pages/error/error.jsp</result>
+		</action>
+		
+		<!-- 查询操作-->
+		<action name="queryServer" method="queryServer" class="m1320Action">
+			<result name="success">/pages/demo/demo.jsp</result>
+			<result name="fail">/pages/error/error.jsp</result>
+		</action>
+		<action name="queryServerDetail" method="queryServerDetail" class="m1320Action">
+			<result name="success">/pages/m1320/m1320_main_view.jsp</result>
+			<result name="fail">/pages/error/error_common.jsp</result>
+		</action>
+		<action name="queryServerPortDetail" method="queryServerPortDetail" class="m1320Action">
+			<result name="success">/pages/demo/demo.jsp</result>
+			<result name="fail">/pages/error/error.jsp</result>
+		</action>
+		
+		<!-- 增加操作-->
+		<action name="addServer" method="addServer" class="m1320Action">
+			<result name="success">/pages/common/common_success.jsp</result>
+			<result name="fail">/pages/error/error_common.jsp</result>
+		</action>
+		<!-- 修改操作-->
+		<action name="updateServer" method="updateServer" class="m1320Action">
+			<result name="success">/pages/m1320/m1320_main_update.jsp</result>
+			<result name="fail">/pages/error/error_common.jsp</result>
+		</action>
+		<action name="doUpdateServer" method="doUpdateServer" class="m1320Action">
+			<result name="success">/pages/m1320/m1320_main_update_success.jsp</result>
+			<result name="fail">/pages/error/error_common.jsp</result>
+		</action>
+		<!-- 删除操作 -->
+		<action name="delServer" method="delServer" class="m1320Action">
+			<result name="success">/pages/common/common_success.jsp</result>
+			<result name="fail">/pages/error/error_common.jsp</result>
+		</action>
+		
+	</package>
+</struts>

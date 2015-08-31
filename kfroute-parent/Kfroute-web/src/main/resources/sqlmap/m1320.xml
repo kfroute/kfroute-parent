@@ -1,0 +1,618 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE sqlMap PUBLIC "-//iBATIS.com//DTD SQL Map 2.0//EN" "http://ibatis.apache.org/dtd/sql-map-2.dtd">
+
+<sqlMap namespace="serverManage">
+	<typeAlias alias="serverMsg"
+		type="cn.melinkr.platform.kfroute.SourceServerMsg" />
+	<typeAlias alias="serverMsgHis"
+		type="cn.melinkr.platform.kfroute.SourceServerMsgHis" />
+	<typeAlias alias="serverBelongGroup"
+		type="cn.melinkr.platform.kfroute.ServerBelongGroup" />
+	<typeAlias alias="sourceServerPortMsg"
+		type="cn.melinkr.platform.kfroute.SourceServerPortMsg" />
+	<typeAlias alias="serverPortPool" type="cn.melinkr.platform.kfroute.ServerPortPool" />
+	<resultMap id="serverMsgMap" class="serverMsg">
+		<result column="server_id" property="serverId" />
+		<result column="server_name" property="serverName" />
+		<result column="shadow_socks_id" property="shadowSocksId" />
+		<result column="oper_system" property="operSystem" />
+		<result column="sys_kernel" property="sysKernel" />
+		<result column="file_handles" property="fileHandles" />
+		<result column="cpu_model" property="cpuModel" />
+		<result column="cpu_freq" property="cpuFreq" />
+		<result column="active_timestamp" property="activeTimestamp" />
+		<result column="sys_status" property="sysStatus" />
+		<result column="ip_address" property="ipAddress" />
+		<result column="center_name" property="centerName" />
+		<result column="operator" property="operator" />
+		<result column="latitude" property="latitude" />
+		<result column="longitude" property="longitude" />
+		<result column="location" property="location" />
+		<result column="band_width" property="bandWidth" />
+		<result column="rate" property="rate" />
+		<result column="city_name" property="cityName" />
+		<result column="belong_group" property="belongGroup" />
+		<result column="group_name" property="belongGroupName" />
+		<result column="update_timestamp" property="updateTimestamp" />
+		<result column="update_by" property="updateBy" />
+		<result column="create_timestamp" property="createTimestamp" />
+		<result column="create_by" property="createBy" />
+		<result column="create_accept" property="createAccept" />
+		<result column="op_note" property="opNote" />
+		<result column="note" property="note" />
+	</resultMap>
+	<resultMap id="sourceServerPortMsgMap" class="sourceServerPortMsg">
+		<result column="relation_id" property="relationId" />
+		<result column="source_id" property="sourceId" />
+		<result column="source_ip" property="sourceIp" />
+		<result column="port" property="port" />
+		<result column="password" property="password" />
+		<result column="use_flag" property="useFlag" />
+		<result column="time_out" property="timeOut" />
+		<result column="update_time" property="updateTime" />
+		<result column="update_desc" property="updateDesc" />
+		<result column="run_status" property="runStatus" />
+		<result column="active_time" property="activeTime" />
+	</resultMap>
+
+	<insert id="insertBatchServer" parameterClass="serverMsg">
+		INSERT INTO
+		dsourceservermsg
+		(
+		server_name,
+		shadow_socks_id,
+		oper_system,
+		sys_kernel,
+		file_handles,
+		cpu_model,
+		cpu_freq,
+		active_timestamp,
+		sys_status,
+		ip_address,
+		center_name,
+		operator,
+		longitude,
+		latitude,
+		location,
+		band_width,
+		rate,
+		city_name,
+		belong_group,
+		create_timestamp,
+		create_accept,
+		op_note,
+		note
+
+		)
+		VALUES
+		(
+		#serverName#,
+		#shadowSocksId#,
+		#operSystem#,
+		#sysKernel#,
+		#fileHandles#,
+		#cpuModel#,
+		#cpuFreq#,
+		#activeTimestamp#,
+		#sysStatus#,
+		#ipAddress#,
+		#centerName#,
+		#operator#,
+		#longitude#,
+		#latitude#,
+		#location#,
+		#bandWidth#,
+		#rate#,
+		#cityName#,
+		#belongGroup#,
+		#createTimestamp#,
+		#createAccept#,
+		#opNote#,
+		#note#
+		)
+	</insert>
+	<select id="findServer" parameterClass="Map" resultMap="serverMsgMap">
+		select a.*,b.group_name from dsourceservermsg a left join
+		dserverbelonggroup b on a.belong_group = b.group_id
+		<dynamic prepend="where">
+			<isNotEmpty prepend=" and " property="serverMsg.serverId">
+				server_id =
+				#serverMsg.serverId#
+	        </isNotEmpty>
+			<isNotEmpty prepend=" and " property="serverMsg.serverName">
+				server_name =
+				#serverMsg.serverName#
+	        </isNotEmpty>
+			<isNotEmpty prepend=" and " property="serverMsg.ipAddress">
+				ip_address =
+				#serverMsg.ipAddress#
+	        </isNotEmpty>
+	        
+	        <isNotEmpty prepend=" and " property="serverMsg.operator">
+				operator =
+				#serverMsg.operator#
+	        </isNotEmpty>
+	        <isNotEmpty prepend=" and " property="serverMsg.location">
+				location =
+				#serverMsg.location#
+	        </isNotEmpty>
+	        <isNotEmpty prepend=" and " property="serverMsg.bandWidth">
+				band_width =
+				#serverMsg.bandWidth#
+	        </isNotEmpty>
+	        <isNotEmpty prepend=" and " property="serverMsg.sysStatus">
+				sys_status =
+				#serverMsg.sysStatus#
+	        </isNotEmpty>
+	        <isNotEmpty prepend=" and " property="serverMsg.rate">
+				rate =
+				#serverMsg.rate#
+	        </isNotEmpty>
+	        <isNotEmpty prepend=" and " property="serverMsg.belongGroup">
+				belong_group =
+				#serverMsg.belongGroup#
+	        </isNotEmpty>
+		    <isNotEmpty prepend=" and " property="startTimestamp">
+				create_timestamp &gt;=
+				STR_TO_DATE(#startTimestamp#,'%Y-%m-%d')
+
+			</isNotEmpty>
+			<isNotEmpty prepend=" and " property="endTimestamp">
+				create_timestamp &lt;
+				STR_TO_DATE(#endTimestamp#,'%Y-%m-%d') 
+			
+			</isNotEmpty>
+		</dynamic>
+		limit 1
+	</select>
+	<select id="findServerListCount" parameterClass="Map"
+		resultClass="java.lang.Integer">
+		select count(*) from dsourceservermsg a left join
+		dserverbelonggroup b on a.belong_group = b.group_id
+		<dynamic prepend="where">
+			<isNotEmpty prepend=" and " property="serverMsg.serverId">
+				server_id =
+				#serverMsg.serverId#
+	      </isNotEmpty>
+			<isNotEmpty prepend=" and " property="serverName">
+				server_name =
+				#serverName#
+	      </isNotEmpty>
+			<isNotEmpty prepend=" and " property="serverMsg.ipAddress">
+				ip_address =
+				#serverMsg.ipAddress#
+	      </isNotEmpty>
+	        <isNotEmpty prepend=" and " property="serverMsg.operator">
+				operator =
+				#serverMsg.operator#
+	        </isNotEmpty>
+	        <isNotEmpty prepend=" and " property="serverMsg.location">
+				location =
+				#serverMsg.location#
+	        </isNotEmpty>
+	        <isNotEmpty prepend=" and " property="serverMsg.bandWidth">
+				band_width =
+				#serverMsg.bandWidth#
+	        </isNotEmpty>
+	        <isNotEmpty prepend=" and " property="serverMsg.sysStatus">
+				sys_status =
+				#serverMsg.sysStatus#
+	        </isNotEmpty>
+	        <isNotEmpty prepend=" and " property="serverMsg.rate">
+				rate =
+				#serverMsg.rate#
+	        </isNotEmpty>
+	        <isNotEmpty prepend=" and " property="serverMsg.belongGroup">
+				belong_group =
+				#serverMsg.belongGroup#
+	        </isNotEmpty>
+		    <isNotEmpty prepend=" and " property="startTimestamp">
+				create_timestamp &gt;=
+				STR_TO_DATE(#startTimestamp#,'%Y-%m-%d')
+
+			</isNotEmpty>
+			<isNotEmpty prepend=" and " property="endTimestamp">
+				create_timestamp &lt;
+				STR_TO_DATE(#endTimestamp#,'%Y-%m-%d') 
+			
+			</isNotEmpty>
+
+		</dynamic>
+	</select>
+	<select id="findServerListFilterCount" parameterClass="Map"
+		resultClass="java.lang.Integer">
+		select count(*) from dsourceservermsg a left join
+		dserverbelonggroup b on a.belong_group = b.group_id
+		<dynamic prepend="where">
+			<isNotEmpty prepend=" and " property="serverMsg.serverId">
+				server_id =
+				#serverMsg.serverId#
+	      </isNotEmpty>
+			<isNotEmpty prepend=" and " property="serverMsg.serverName">
+				server_name =
+				#serverMsg.serverName#
+	      </isNotEmpty>
+			<isNotEmpty prepend=" and " property="serverMsg.ipAddress">
+				ip_address =
+				#serverMsg.ipAddress#
+	      </isNotEmpty>
+	        <isNotEmpty prepend=" and " property="serverMsg.operator">
+				operator =
+				#serverMsg.operator#
+	        </isNotEmpty>
+	        <isNotEmpty prepend=" and " property="serverMsg.location">
+				location =
+				#serverMsg.location#
+	        </isNotEmpty>
+	        <isNotEmpty prepend=" and " property="serverMsg.bandWidth">
+				band_width =
+				#serverMsg.bandWidth#
+	        </isNotEmpty>
+	        <isNotEmpty prepend=" and " property="serverMsg.sysStatus">
+				sys_status =
+				#serverMsg.sysStatus#
+	        </isNotEmpty>
+	        <isNotEmpty prepend=" and " property="serverMsg.rate">
+				rate =
+				#serverMsg.rate#
+	        </isNotEmpty>
+	        <isNotEmpty prepend=" and " property="serverMsg.belongGroup">
+				belong_group =
+				#serverMsg.belongGroup#
+	        </isNotEmpty>
+		    <isNotEmpty prepend=" and " property="startTimestamp">
+				create_timestamp &gt;=
+				STR_TO_DATE(#startTimestamp#,'%Y-%m-%d')
+
+			</isNotEmpty>
+			<isNotEmpty prepend=" and " property="endTimestamp">
+				create_timestamp &lt;
+				STR_TO_DATE(#endTimestamp#,'%Y-%m-%d') 
+			
+			</isNotEmpty>
+			<isNotEmpty prepend=" and " property="search">
+				$search$
+	      </isNotEmpty>
+		</dynamic>
+	</select>
+	<select id="findServerList" parameterClass="Map" resultMap="serverMsgMap">
+		select a.*,b.group_name from dsourceservermsg a left join
+		dserverbelonggroup b on a.belong_group = b.group_id
+		<dynamic prepend="where">
+			<isNotEmpty prepend=" and " property="serverMsg.serverId">
+				server_id =
+				#serverMsg.serverId#
+	      </isNotEmpty>
+			<isNotEmpty prepend=" and " property="serverMsg.serverName">
+				server_name =
+				#serverMsg.serverName#
+	      </isNotEmpty>
+			<isNotEmpty prepend=" and " property="serverMsg.ipAddress">
+				ip_address =
+				#serverMsg.ipAddress#
+	      </isNotEmpty>
+	        <isNotEmpty prepend=" and " property="serverMsg.operator">
+				operator =
+				#serverMsg.operator#
+	        </isNotEmpty>
+	        <isNotEmpty prepend=" and " property="serverMsg.location">
+				location =
+				#serverMsg.location#
+	        </isNotEmpty>
+	        <isNotEmpty prepend=" and " property="serverMsg.bandWidth">
+				band_width =
+				#serverMsg.bandWidth#
+	        </isNotEmpty>
+	        <isNotEmpty prepend=" and " property="serverMsg.sysStatus">
+				sys_status =
+				#serverMsg.sysStatus#
+	        </isNotEmpty>
+	        <isNotEmpty prepend=" and " property="serverMsg.rate">
+				rate =
+				#serverMsg.rate#
+	        </isNotEmpty>
+	        <isNotEmpty prepend=" and " property="serverMsg.belongGroup">
+				belong_group =
+				#serverMsg.belongGroup#
+	        </isNotEmpty>
+		    <isNotEmpty prepend=" and " property="startTimestamp">
+				create_timestamp &gt;=
+				STR_TO_DATE(#startTimestamp#,'%Y-%m-%d')
+
+			</isNotEmpty>
+			<isNotEmpty prepend=" and " property="endTimestamp">
+				create_timestamp &lt;
+				STR_TO_DATE(#endTimestamp#,'%Y-%m-%d') 
+			
+			</isNotEmpty>
+			<isNotEmpty prepend=" and " property="search">
+				$search$
+			</isNotEmpty>
+
+		</dynamic>
+		<dynamic prepend="">
+			<isNotEmpty prepend=" " property="order">
+				order by $order$
+			</isNotEmpty>
+
+		</dynamic>
+
+		limit #pageSize# offset #offset#;
+	</select>
+	<select id="findPortList" parameterClass="Map" resultClass="serverPortPool">
+		select port_id as portId,port_value as portValue from sportpool
+
+	</select>
+	<select id="findServerPortListCount" parameterClass="Map"
+		resultClass="java.lang.Integer">
+		select count(*) from ssourseservportmsg 
+		<dynamic prepend="where">
+			<isNotEmpty prepend=" and " property="serverPortMsg.sourceIp">
+				source_ip =
+				#serverPortMsg.sourceIp#
+			</isNotEmpty>
+			<isNotEmpty prepend=" and " property="port">
+				port =
+				#port#
+			</isNotEmpty>
+			
+
+		</dynamic>
+	</select>
+	<select id="findServerPortListFilterCount" parameterClass="Map"
+		resultClass="java.lang.Integer">
+		select count(*) from ssourseservportmsg 
+		<dynamic prepend="where">
+			<isNotEmpty prepend=" and " property="serverPortMsg.sourceIp">
+				source_ip =
+				#serverPortMsg.sourceIp#
+			</isNotEmpty>
+			<isNotEmpty prepend=" and " property="port">
+				port =
+				#port#
+			</isNotEmpty>
+			<isNotEmpty prepend=" and " property="search">
+				$search$
+	      </isNotEmpty>
+		</dynamic>
+	</select>
+	<select id="findServerPortList" parameterClass="Map" resultMap="sourceServerPortMsgMap">
+		select a.* from ssourseservportmsg a 
+		<dynamic prepend="where">
+			<isNotEmpty prepend=" and " property="serverPortMsg.sourceIp">
+				source_ip =
+				#serverPortMsg.sourceIp#
+			</isNotEmpty>
+			<isNotEmpty prepend=" and " property="port">
+				port =
+				#port#
+			</isNotEmpty>
+			<isNotEmpty prepend=" and " property="search">
+				$search$
+			</isNotEmpty>
+
+		</dynamic>
+		<dynamic prepend="">
+			<isNotEmpty prepend=" " property="order">
+				order by $order$
+			</isNotEmpty>
+
+		</dynamic>
+
+		limit #pageSize# offset #offset#;
+	</select>
+	<insert id="insertServerPortList" parameterClass="sourceServerPortMsg">
+		INSERT INTO
+		ssourseservportmsg
+		(
+		source_id,
+		source_ip,
+		port,
+		password,
+		use_flag,
+		time_out,
+		update_time,
+		update_desc,
+		run_status,
+		active_time
+		)
+		VALUES
+		(
+		#sourceId#,
+		#sourceIp#,
+		#port#,
+		#password#,
+		#useFlag#,
+		#timeOut#,
+		#updateTime#,
+		#updateDesc#,
+		#runStatus#,
+		#activeTime#
+
+		)
+	</insert>
+	<update id="updateServerMsg" parameterClass="serverMsg">
+		update dsourceservermsg
+		<dynamic prepend="set">
+			<isNotEmpty prepend=" , " property="serverName">server_name =
+				#serverName#</isNotEmpty>
+			<isNotEmpty prepend=" , " property="shadowSocksId">shadow_socks_id =
+				#shadowSocksId#</isNotEmpty>
+			<isNotEmpty prepend=" , " property="operSystem">oper_system =
+				#operSystem#</isNotEmpty>
+			<isNotEmpty prepend=" , " property="sysKernel">sys_kernel =
+				#sysKernel#</isNotEmpty>
+			<isNotEmpty prepend=" , " property="fileHandles">file_handles =
+				#fileHandles#</isNotEmpty>
+			<isNotEmpty prepend=" , " property="cpuModel">cpu_model = #cpuModel#
+			</isNotEmpty>
+			<isNotEmpty prepend=" , " property="cpuFreq">cpu_freq = #cpuFreq#
+			</isNotEmpty>
+			<isNotEmpty prepend=" , " property="activeTimestamp">active_timestamp =
+				#activeTimestamp#</isNotEmpty>
+			<isNotEmpty prepend=" , " property="sysStatus">sys_status =
+				#sysStatus#</isNotEmpty>
+			<isNotEmpty prepend=" , " property="ipAddress">ip_address =
+				#ipAddress#</isNotEmpty>
+			<isNotEmpty prepend=" , " property="centerName">center_name =
+				#centerName#</isNotEmpty>
+			<isNotEmpty prepend=" , " property="operator">operator = #operator#
+			</isNotEmpty>
+			<isNotEmpty prepend=" , " property="location">location = #location#
+			</isNotEmpty>
+			<isNotEmpty prepend=" , " property="bandWidth">band_width =
+				#bandWidth#</isNotEmpty>
+			<isNotEmpty prepend=" , " property="rate">rate = #rate#
+			</isNotEmpty>
+			<isNotEmpty prepend=" , " property="belongGroup">belong_group =
+				#belongGroup#</isNotEmpty>
+			<isNotEmpty prepend=" , " property="updateBy">update_by =
+				#updateBy#</isNotEmpty>
+			<isNotEmpty prepend=" , " property="opNote">op_note = #opNote#
+			</isNotEmpty>
+			<isNotEmpty prepend=" , " property="note">note =#note#
+			</isNotEmpty>
+
+		</dynamic>
+		where server_id = #serverId#
+	</update>
+	<insert id="insertServerHisByMap" parameterClass="Map">
+		INSERT INTO
+		dsourceservermsghis
+		(
+			server_id,
+			server_name,
+			shadow_socks_id,
+			oper_system,
+			sys_kernel,
+			file_handles,
+			cpu_model,
+			cpu_freq,
+			active_timestamp,
+			sys_status,
+			ip_address,
+			center_name,
+			operator,
+			longitude,
+			latitude,
+			location,
+			band_width,
+			rate,
+			city_name,
+			belong_group,
+			create_timestamp,
+			create_accept,
+			op_note,
+			note,
+			his_note,
+			his_by,
+			his_time,
+			his_type
+
+		)
+		select 
+			server_id,
+			server_name,
+			shadow_socks_id,
+			oper_system,
+			sys_kernel,
+			file_handles,
+			cpu_model,
+			cpu_freq,
+			active_timestamp,
+			sys_status,
+			ip_address,
+			center_name,
+			operator,
+			longitude,
+			latitude,
+			location,
+			band_width,
+			rate,
+			city_name,
+			belong_group,
+			create_timestamp,
+			create_accept,
+			op_note,
+			note,
+			#hisNote#,
+			#hisBy#,
+			#hisTime#,
+			#hisType#
+		 from dsourceservermsg where ip_address = #ipAddress#
+	</insert>
+	<insert id="insertServerHis" parameterClass="serverMsgHis">
+		INSERT INTO
+		dsourceservermsghis
+		(
+			server_id,
+			server_name,
+			shadow_socks_id,
+			oper_system,
+			sys_kernel,
+			file_handles,
+			cpu_model,
+			cpu_freq,
+			active_timestamp,
+			sys_status,
+			ip_address,
+			center_name,
+			operator,
+			longitude,
+			latitude,
+			location,
+			band_width,
+			rate,
+			city_name,
+			belong_group,
+			create_timestamp,
+			create_accept,
+			op_note,
+			note,
+			his_note,
+			his_by,
+			his_time,
+			his_type
+
+		)
+		VALUES
+		(
+			#sourceServerMsg.serverId#,
+			#sourceServerMsg.serverName#,
+			#sourceServerMsg.shadowSocksId#,
+			#sourceServerMsg.operSystem#,
+			#sourceServerMsg.sysKernel#,
+			#sourceServerMsg.fileHandles#,
+			#sourceServerMsg.cpuModel#,
+			#sourceServerMsg.cpuFreq#,
+			#sourceServerMsg.activeTimestamp#,
+			#sourceServerMsg.sysStatus#,
+			#sourceServerMsg.ipAddress#,
+			#sourceServerMsg.centerName#,
+			#sourceServerMsg.operator#,
+			#sourceServerMsg.longitude#,
+			#sourceServerMsg.latitude#,
+			#sourceServerMsg.location#,
+			#sourceServerMsg.bandWidth#,
+			#sourceServerMsg.rate#,
+			#sourceServerMsg.cityName#,
+			#sourceServerMsg.belongGroup#,
+			#sourceServerMsg.createTimestamp#,
+			#sourceServerMsg.createAccept#,
+			#sourceServerMsg.opNote#,
+			#sourceServerMsg.note#
+			#hisNote#,
+			#hisBy#,
+			#hisTime#,
+			#hisType#
+		)
+	</insert>
+	<update id="delServer" parameterClass="serverMsg">
+		delete from dsourceservermsg
+		where ip_address = #ipAddress#
+	</update>
+	<select id="findBelongGroup" parameterClass="Map" resultClass="serverBelongGroup">
+		select group_id as groupId,group_name as groupName from dserverbelonggroup
+
+	</select>
+</sqlMap>

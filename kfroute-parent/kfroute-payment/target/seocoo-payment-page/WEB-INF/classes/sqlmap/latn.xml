@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE sqlMap PUBLIC "-//iBATIS.com//DTD SQL Map 2.0//EN" "http://ibatis.apache.org/dtd/sql-map-2.dtd">
+
+<sqlMap namespace="latn">
+	<typeAlias alias="latn" type="cn.seocoo.platform.payment.Latn" />
+
+	<select id="queryAll" resultClass="latn">
+		select * from tb_seocoo_latn where level=2
+	</select>
+
+	<select id="queryList" parameterClass="latn" resultClass="latn">
+		select * from tb_seocoo_latn where parentId=#aiid#
+	</select>
+	
+	<select id="query" parameterClass="latn" resultClass="latn">
+		select * from tb_seocoo_latn where aiid=#aiid#
+	</select>
+	
+	<select id="queryTheAll" resultClass="latn">
+		select * from tb_seocoo_latn
+	</select>
+	
+
+</sqlMap>

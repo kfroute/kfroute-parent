@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:aop="http://www.springframework.org/schema/aop"
+	xmlns:tx="http://www.springframework.org/schema/tx"
+	xsi:schemaLocation="
+			http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-2.5.xsd
+			http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop-2.5.xsd
+			http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx-2.5.xsd"
+			default-autowire="byName" default-lazy-init="true">
+		<!-- 接口及公共服务 -->
+		<bean id="uploadRouteMsgService" class="cn.melinkr.platform.busi.server.interService.impl.UploadRouterMsgService" />
+		<bean id="uploadSourceServerMsgService" class="cn.melinkr.platform.busi.server.interService.impl.UploadSourceServerMsgService" />
+		<bean id="initServerPortMsgService" class="cn.melinkr.platform.busi.server.interService.impl.InitServerPortMsgService" />
+		<bean id="systemConfigService" class="cn.melinkr.plateform.busi.systemconfig.service.impl.SystemConfigServiceImpl"></bean>
+		<bean id="queryAvailableServerIpService" class="cn.melinkr.platform.busi.server.interService.impl.QueryAvailableServerIpService"></bean>
+		<bean id="uploadTestMsgAndGetServerPortService" class="cn.melinkr.platform.busi.server.interService.impl.UploadTestMsgAndGetServerPortService"></bean>
+		<bean id="routerOnlineNotifyService" class="cn.melinkr.platform.busi.server.interService.impl.RouterOnlineNotifyService"></bean>
+		<bean id="uploadWarningMsgService" class="cn.melinkr.platform.busi.server.interService.impl.UploadWarningMsgService"></bean>
+		
+		<!-- 业务服务 -->
+			
+		<bean id="routerMsgLogBusiService" class="cn.melinkr.platform.busi.server.busiService.impl.RouterMsgLogBusiServiceImpl" />
+		<bean id="sourceServerMsgLogBusiService" class="cn.melinkr.platform.busi.server.busiService.impl.SourceServerMsgLogBusiServiceImpl" />
+			<!-- 服务器端口初始化服务 -->
+		<bean id="initServerPortMsgBusiService" class="cn.melinkr.platform.busi.server.busiService.impl.InitServerPortMsgBusiServiceImpl" />
+			<!-- 路由器初始化获取服务器ip列表服务 -->
+		<bean id="queryAvailableServerIpBusiService" class="cn.melinkr.platform.busi.server.busiService.impl.QueryAvailableServerIpBusiServiceImpl" />
+			<!-- 路由器上报测速情况 并且选择ip地址获取端口服务 -->
+		<bean id="uploadTestMsgAndGetServerPortBusiService" class="cn.melinkr.platform.busi.server.busiService.impl.UploadTestMsgAndGetServerPortBusiServiceImpl" />
+			<!-- 路由器上线通知服务 -->
+		<bean id="routerOnlineNotifyBusiService" class="cn.melinkr.platform.busi.server.busiService.impl.RouterOnlineNotifyBusiServiceImpl" />
+			<!-- 告警数据上报接口 -->
+		<bean id="uploadWarningMsgBusiService" class="cn.melinkr.platform.busi.server.busiService.impl.UploadWarningMsgBusiServiceImpl" />
+</beans>
+

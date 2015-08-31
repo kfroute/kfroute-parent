@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE sqlMap PUBLIC "-//iBATIS.com//DTD SQL Map 2.0//EN" "http://ibatis.apache.org/dtd/sql-map-2.dtd">
+
+<sqlMap namespace="serverInterMsg">
+	<typeAlias alias="serverShadowSocksBean" type="cn.melinkr.platform.kfroute.ServerShadowSocksBean" />
+	<typeAlias alias="sourceServerPortMsg"
+		type="cn.melinkr.platform.kfroute.SourceServerPortMsg" />
+	
+	<resultMap id="serverShadowSocksBeanMap" class="serverShadowSocksBean">
+		<result column="ip_address" property="server" />
+		<result column="local_address" property="local_address" />
+		<result column="local_port" property="local_port" />
+		<result column="timeout" property="timeout" />
+		<result column="method" property="method" />
+		<result column="fast_open" property="fast_open" />
+	</resultMap>
+	<resultMap id="sourceServerPortMsgMap" class="sourceServerPortMsg">
+		<result column="relation_id" property="relationId" />
+		<result column="source_id" property="sourceId" />
+		<result column="source_ip" property="sourceIp" />
+		<result column="port" property="port" />
+		<result column="password" property="password" />
+		<result column="use_flag" property="useFlag" />
+		<result column="time_out" property="timeOut" />
+		<result column="update_time" property="updateTime" />
+		<result column="update_desc" property="updateDesc" />
+		<result column="run_status" property="runStatus" />
+		<result column="active_time" property="activeTime" />
+	</resultMap>
+	<select id="findServerShadowSockMsg" parameterClass="Map" resultMap="serverShadowSocksBeanMap">
+		select  a.ip_address,
+				b.local_address,
+				b.local_port,
+				b.timeout,
+				b.method,
+				b.fast_open
+		from dsourceservermsg a,wshadowsocks b
+		where a.shadow_socks_id = b.sds_id 
+			and a.ip_address = #serverIp#
+	</select>
+	<select id="findServerShadowSockPortMsp" parameterClass="Map" resultMap="sourceServerPortMsgMap">
+		select  *
+		from ssourseservportmsg a
+		where a.source_ip = #serverIp#
+	</select>
+</sqlMap>

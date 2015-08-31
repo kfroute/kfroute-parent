@@ -1,0 +1,71 @@
+@charset "utf-8";
+/* CSS Document */
+body, ul, dl, dd, dt, ol, li, p, h1, h2, h3, h4, h5, h6, textarea, form, select, fieldset, table, td, div, input{margin:0;padding:0;-webkit-text-size-adjust:none}
+h1, h2, h3, h4, h5, h6{font-size:12px;font-weight:normal}
+html,body{overflow: auto; overflow-x:hidden;}
+a img{border:0}
+body{color:#333;text-align:center;font:12px "微软雅黑";}
+ul, ol, li{list-style-type:none;vertical-align:0;}
+a{outline-style:none;color:#535353;text-decoration:none;}
+a:hover{text-decoration:none;}
+body,td,th {font-size: 14px;color: #666; background-color:#f7f7f7;}
+/*logo*/
+.header{ width:100%; margin:0 auto; overflow:hidden; padding-top:20px; border-bottom:#ebebeb solid 1px; background-color:#fff;}
+.header img{float:left;margin-left:210px;}
+.header p{ float:left; width:150px; height:68px; text-align:center; font-size:24px; font-family:"幼圆";color:#6DB72C; font-weight:bold; line-height:68px;}
+
+.main_box{ width:1000px; overflow:hidden; margin:0 auto; margin-top:10px;}
+.left_box{ width:740px; overflow:hidden; float:left;}
+.right_box{width:240px; overflow:hidden; float:right; border:#ebebeb solid 1px; background-color:#FFF;}
+/*订餐信息*/
+.order{ width:720px; border:#ebebeb solid 1px; overflow:hidden;background-color:#FFF;}
+.order img{float:left; margin:10px 0 0 20px;}
+.order p{ float:left; width:600px; height:50px; line-height:50px; text-align:center; font-size:16px; font-family:"幼圆";color:#5e5e5e; font-weight:bold; }
+.order span{color:#898989;}
+
+.bank_box{width:720px; border:#ebebeb solid 1px; overflow:hidden;background-color:#FFF; margin-top:10px;}
+.pay p{ display:block;width:720px;background-color:#f7f7f7; font-size:20px; text-align:left; padding:5px 10px;}
+.order_msg{ width:180px; margin:20px 20px;}
+.order_msg p{ text-align:left; font-family:"宋体"; padding:2px;}
+.order_msg p span{color:#FE4D3D;}
+
+
+/*选择银行*/
+.bank{ width:720px; background-color:#f7f7f7;overflow:hidden;border-bottom:#ebebeb solid 1px;}
+
+.content_tiltle{width:720px; overflow:hidden; margin-top:30px;}
+.content_tiltle li{ float:left;}
+.content_tiltle li a{display:block;width:170px; height:38px;font-size:16px; font-weight:bold; line-height:38px;}
+.current a{color:#50C027;border-top:#76C027 1px solid;border-left:#76C027 1px solid;border-right:#76C027 1px solid;}
+.others{ border-bottom:#76C027 1px solid;}
+.other{ border-bottom:#76C027 1px solid; width:94px; height:38px;}
+.other01{ border-bottom:#76C027 1px solid; width:20px; height:38px; float:left;}
+
+/*内容1、2*/
+.sub_content_bank p{ display:block;height:25px; line-height:25px; text-align:left; margin:10px 0;}
+.bank-list{ overflow:hidden;}
+.bank-list li{float:left; position:relative; width:200px; height:42px;}
+.bank-list li input{ position:absolute; top:30%; left:3%;}
+.bank-list--upop li{ width:200px;position:relative; }
+.bank-list--upop li input{ position:absolute; top:30%; left:4%;}
+/*内容3*/
+.bank-list--xpay{ width:680px; margin-left:10px;}
+.bank-list--xpay li{ float:left; position:relative; width:178px; height:42px;}
+.bank-list--xpay li input{ position:absolute; top:45%; left:0;}
+
+/*支付确认*/
+.confirm{ width:100px; overflow:hidden; margin-left:600px; padding:20px 0;}
+.confirm span{color:#FE4D3D;}
+.queren{ margin-top:10px; margin-left:8px;}
+.queren_btn{display:block; width:84px;;height:30px;background:#50C027;color:#fff;font-size:18px;text-align:center;line-height:30px;border-radius:3px;}
+
+/*问题帮助*/
+.help01{border:#ebebeb solid 1px;  }
+.help01 h2{ font-size:16px; color:#000; text-align:left; margin:15px 10px;}
+.help01 .pra1{background-image:url(../images/icon_01.jpg); background-position:left center; background-repeat:no-repeat; width:210px; margin-left:8px;font-size:12px;font-family:"宋体";}
+.help01 .pra1 p{ width:160px; margin-left:35px; height:50px; line-height:25px;}
+.help01 .pra2{ background-image:url(../images/icon_02.png); background-position:left center; background-repeat:no-repeat;width:210px;margin-left:8px;font-size:12px; margin-top:10px; margin-bottom:30px;font-family:"宋体";height:50px;}
+.help01 .pra2 p{width:160px;margin-left:35px;height:50px; line-height:25px;}
+.help02 h2{ font-size:16px; color:#000; text-align:left; margin:15px 10px;}
+.help02{ height:250px;font-family:"宋体";}
+.help02 ul li a{ width:210px;display:block;background-image:url(../images/sanjiao.jpg); background-position:left center; background-repeat:no-repeat;margin-left:20px;font-size:12px; height:30px;line-height:30px; text-align:left; text-indent:24px;}

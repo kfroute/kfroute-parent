@@ -1,0 +1,266 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE sqlMap PUBLIC "-//iBATIS.com//DTD SQL Map 2.0//EN" "http://ibatis.apache.org/dtd/sql-map-2.dtd">
+
+<sqlMap namespace="serverUseMsg">
+	<typeAlias alias="sourceServerUseMsg" type="cn.melinkr.platform.kfroute.SourceServerUseMsg" />
+	<typeAlias alias="sourceServerUseMsgHis" type="cn.melinkr.platform.kfroute.SourceServerUseMsgHis" />
+	<typeAlias alias="sourceServerMsg" type="cn.melinkr.platform.kfroute.SourceServerMsg" />
+	<typeAlias alias="sourceServerPortMsg" type="cn.melinkr.platform.kfroute.SourceServerPortMsg" />
+	<typeAlias alias="sourceServerPortUseMsg" type="cn.melinkr.platform.kfroute.ServerPortUseMsg" />
+	<typeAlias alias="sourceServerPortUseMsgHis" type="cn.melinkr.platform.kfroute.ServerPortUseMsgHis" />
+
+	<resultMap id="sourceServerUseMsgMap" class="sourceServerUseMsg">
+		<result column="server_id" property="serverId" />
+		<result column="active_timestamp" property="activeTimestamp" />
+		<result column="start_timestamp" property="startTimestamp" />
+		<result column="shutdown_timestamp" property="shutdownTimestamp" />
+		<result column="ip_address" property="ipAddress" />
+		<result column="sys_status" property="sysStatus" />
+		<result column="cpu_status" property="cpuStatus" />
+		<result column="mem_status" property="memStatus" />
+		<result column="disk_status" property="diskStatus" />
+		<result column="current_conn_num" property="currentConnNum" />
+		<result column="total_incoming" property="totalIncoming" />
+		<result column="total_outgoing" property="totalOutgoing" />
+		<result column="update_timestamp" property="updateTimestamp" />
+	</resultMap>
+	<resultMap id="sourceServerPortUseMsgMap" class="sourceServerPortUseMsg">
+		<result column="s_log_id" property="sLogId" />
+		<result column="server_id" property="serverId" />
+		<result column="server_ip" property="serverIp" />
+		<result column="server_port" property="serverPort" />
+		<result column="port_total_outgoing" property="portTotalOutgoing" />
+		<result column="port_total_incoming" property="portTotalIncoming" />
+		<result column="port_status" property="portStatus" />
+		<result column="open_timestamp" property="openTimestamp" />
+		<result column="close_timestamp" property="closeTimestamp" />
+		<result column="port_update_time_stamp" property="portUpdateTimestamp" />
+	</resultMap>
+
+	<resultMap id="sourceServerMsgMap" class="sourceServerMsg">
+		<result column="server_id" property="serverId" />
+		<result column="server_name" property="serverName" />
+		<result column="shadow_socks_id" property="shadowSocksId" />
+		<result column="oper_system" property="operSystem" />
+		<result column="sys_kernel" property="sysKernel" />
+		<result column="file_handles" property="fileHandles" />
+		<result column="cpu_model" property="cpuModel" />
+		<result column="cpu_freq" property="cpuFreq" />
+		<result column="active_timestamp" property="activeTimestamp" />
+		<result column="sys_status" property="sysStatus" />
+		<result column="ip_address" property="ipAddress" />
+		<result column="center_name" property="centerName" />
+		<result column="operator" property="operator" />
+		<result column="latitude" property="latitude" />
+		<result column="longitude" property="longitude" />
+		<result column="location" property="location" />
+		<result column="band_width" property="bandWidth" />
+		<result column="rate" property="rate" />
+		<result column="belong_group" property="belongGroup" />
+		<result column="create_timestamp" property="createTimestamp" />
+		<result column="create_accept" property="createAccept" />
+		<result column="op_note" property="opNote" />
+		<result column="note" property="note" />
+	</resultMap>
+	<resultMap id="sourceServerPortMsgMap" class="sourceServerPortMsg">
+		<result column="relation_id" property="relationId" />
+		<result column="source_id" property="sourceId" />
+		<result column="source_ip" property="sourceIp" />
+		<result column="port" property="port" />
+		<result column="password" property="password" />
+		<result column="use_flag" property="useFlag" />
+		<result column="time_out" property="timeOut" />
+		<result column="update_time" property="updateTime" />
+		<result column="update_desc" property="updateDesc" />
+		<result column="run_status" property="runStatus" />
+		<result column="active_time" property="activeTime" />
+	</resultMap>
+
+	
+	<insert id="insertServerUseMsg" parameterClass="sourceServerUseMsg">
+		INSERT INTO
+		dsourceserverusemsg
+		(
+			server_id,
+			active_timestamp,
+			start_timestamp,
+			shutdown_timestamp,
+			ip_address,
+			sys_status,
+			cpu_status,
+			mem_status,
+			disk_status,
+			current_conn_num,
+			total_incoming,
+			total_outgoing,
+			update_timestamp
+		
+		)
+		VALUES
+		(
+			#serverId#,
+			#activeTimestamp#,
+			#startTimestamp#,
+			#shutdownTimestamp#,
+			#ipAddress#,
+			#sysStatus#,
+			#cpuStatus#,
+			#memStatus#,
+			#diskStatus#,
+			#currentConnNum#,
+			#totalIncoming#,
+			#totalOutgoing#,
+			#updateTimestamp#
+			
+		)
+	</insert>
+	<insert id="insertServerUseMsgHis" parameterClass="sourceServerUseMsgHis">
+		INSERT INTO
+		dsourceserverusemsghis$yearMonth$
+		(
+			server_id,
+			active_timestamp,
+			start_timestamp,
+			shutdown_timestamp,
+			ip_address,
+			sys_status,
+			cpu_status,
+			mem_status,
+			disk_status,
+			current_conn_num,
+			total_incoming,
+			total_outgoing,
+			update_timestamp
+			his_time,
+			his_note,
+			his_type
+		)
+		VALUES
+		(
+			#sourceServerUseMsg.serverId#,
+			#sourceServerUseMsg.activeTimestamp#,
+			#sourceServerUseMsg.startTimestamp#,
+			#sourceServerUseMsg.shutdownTimestamp#,
+			#sourceServerUseMsg.ipAddress#,
+			#sourceServerUseMsg.sysStatus#,
+			#sourceServerUseMsg.cpuStatus#,
+			#sourceServerUseMsg.memStatus#,
+			#sourceServerUseMsg.diskStatus#,
+			#sourceServerUseMsg.currentConnNum#,
+			#sourceServerUseMsg.totalIncoming#,
+			#sourceServerUseMsg.totalOutgoing#,
+			#sourceServerUseMsg.updateTimestamp#,
+			#hisTime#,
+			#hisNote#,
+			#hisType#
+		)
+	</insert>
+	<select id="findSourceServerUseMsg" parameterClass="Map" resultMap="sourceServerUseMsgMap">
+		select a.*
+		from dsourceserverusemsg as a
+		where a.ip_address = #serverIp#
+	</select>
+	
+	<update id="updateServerUseMsg" parameterClass="sourceServerUseMsg">
+		update dsourceserverusemsg
+		<dynamic prepend="set">
+			<isNotEmpty prepend=" , " property="serverId">server_id=#serverId#</isNotEmpty>
+			<isNotEmpty prepend=" , " property="activeTimestamp">active_timestamp=#activeTimestamp#</isNotEmpty>
+			<isNotEmpty prepend=" , " property="startTimestamp">start_timestamp=#startTimestamp#</isNotEmpty>
+			<isNotEmpty prepend=" , " property="shutdownTimestamp">shutdown_timestamp=#shutdownTimestamp#</isNotEmpty>
+			<isNotEmpty prepend=" , " property="ipAddress">ip_address=#ipAddress#</isNotEmpty>
+			<isNotEmpty prepend=" , " property="sysStatus">sys_status=#sysStatus#</isNotEmpty>
+			<isNotEmpty prepend=" , " property="cpuStatus">cpu_status=#cpuStatus#</isNotEmpty>
+			<isNotEmpty prepend=" , " property="memStatus">mem_status=#memStatus#</isNotEmpty>
+			<isNotEmpty prepend=" , " property="diskStatus">disk_status=#diskStatus#</isNotEmpty>
+			<isNotEmpty prepend=" , " property="currentConnNum">current_conn_num=#currentConnNum#</isNotEmpty>
+			<isNotEmpty prepend=" , " property="totalIncoming">total_incoming=#totalIncoming#</isNotEmpty>
+			<isNotEmpty prepend=" , " property="totalOutgoing">total_outgoing=#totalOutgoing#</isNotEmpty>
+			<isNotEmpty prepend=" , " property="updateTimestamp">update_timestamp=#updateTimestamp#</isNotEmpty>
+		</dynamic>
+		where ip_address = #ipAddress#
+	</update>
+
+
+	<select id="queryUseServerPortMsg" parameterClass="Map" resultClass="serverPortUseMsg">
+		select a.s_log_id as sLogId,
+			   a.server_ip as serverIp,
+			   a.server_port as serverPort,
+			   a.port_status as portStatus,
+			   a.open_timestamp as openTimestamp,
+			   a.close_timestamp as closeTimestamp
+		from dserverportusemsg as a
+		where a.server_ip = #serverIp#
+			and a.server_port = #serverPort#
+	</select>
+	<insert id="insertUseServerPortMsg" parameterClass="serverPortUseMsg">
+		INSERT INTO
+		dserverportusemsg
+		(
+			server_id,
+			server_ip,
+			server_port,
+			port_total_outgoing,
+			port_total_incoming,
+			port_status,
+			open_timestamp,
+			close_timestamp,
+			port_update_time_stamp
+
+		)
+		VALUES
+		(
+			#serverId#,
+			#serverIp#,
+			#serverPort#,
+			#portTotalOutgoing#,
+			#portTotalIncoming#,
+			#portStatus#,
+			#openTimestamp#,
+			#closeTimestamp#,
+			#portUpdateTimestamp#
+		)
+	</insert>
+	<insert id="insertUseServerPortMsgHis" parameterClass="serverPortUseMsgHis">
+		INSERT INTO
+		dserverportusemsghis$yearMonth$
+		(
+			server_id,
+			server_ip,
+			server_port,
+			port_total_outgoing,
+			port_total_incoming,
+			port_status,
+			open_timestamp,
+			close_timestamp,
+			port_update_time_stamp,
+			his_time,
+			his_note,
+			his_type
+
+		)
+		VALUES
+		(
+			#serverPortUseMsg.serverId#,
+			#serverPortUseMsg.serverIp#,
+			#serverPortUseMsg.serverPort#,
+			#serverPortUseMsg.portTotalOutgoing#,
+			#serverPortUseMsg.portTotalIncoming#,
+			#serverPortUseMsg.portStatus#,
+			#serverPortUseMsg.openTimestamp#,
+			#serverPortUseMsg.closeTimestamp#,
+			#serverPortUseMsg.portUpdateTimestamp#,
+			#hisTime#,
+			#hisNote#,
+			#hisType#
+		)
+	</insert>
+	<update id="updateServerPortUseMsg" parameterClass="sourceServerPortUseMsg">
+		update dserverportusemsg
+		set port_total_outgoing =#portTotalOutgoing#,
+			port_total_incoming=#portTotalIncoming#,
+			port_status=#portStatus# ,
+			port_update_time_stamp=#portUpdateTimestamp#
+		where server_ip = #serverIp# and server_port=#serverPort# and port_status=1
+	</update>
+</sqlMap>

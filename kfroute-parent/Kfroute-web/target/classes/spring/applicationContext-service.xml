@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:aop="http://www.springframework.org/schema/aop"
+	xmlns:tx="http://www.springframework.org/schema/tx"
+	xsi:schemaLocation="
+			http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-2.5.xsd
+			http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop-2.5.xsd
+			http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx-2.5.xsd"
+			default-autowire="byName" default-lazy-init="true">
+			
+		<!-- 
+		<bean id="demoService" class="cn.melinkr.kfroute.service.demo.service.impl.DemoServiceImpl" />
+		 -->
+		<bean id="systemConfigService" class="cn.melinkr.kfrouteWeb.service.systemconfig.service.impl.SystemConfigServiceImpl"></bean>
+		<bean id="uploadService" class="cn.melinkr.kfrouteWeb.business.service.impl.UploadServiceImpl"></bean>
+		<bean id="commonService" class="cn.melinkr.kfrouteWeb.business.service.impl.CommonServiceImpl"></bean>
+		<bean id="m1310Service" class="cn.melinkr.kfrouteWeb.business.m1310.service.impl.M1310ServiceImpl"></bean>
+		<bean id="m1320Service" class="cn.melinkr.kfrouteWeb.business.m1320.service.impl.M1320ServiceImpl"></bean>
+		<bean id="m1320ActiveService" class="cn.melinkr.kfrouteWeb.business.m1320.service.impl.M1320ActiveServiceImpl"></bean>
+</beans>

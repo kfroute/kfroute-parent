@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE sqlMap PUBLIC "-//iBATIS.com//DTD SQL Map 2.0//EN" "http://ibatis.apache.org/dtd/sql-map-2.dtd">
+
+<sqlMap namespace="paymentEntity">
+	<typeAlias alias="PaymentEntity" type="cn.seocoo.platform.payment.PaymentEntity" />
+
+	<select id="queryAll" resultClass="PaymentEntity">
+		select * from tb_seocoo_payment
+	</select>
+
+	<select id="query" parameterClass="PaymentEntity" resultClass="PaymentEntity">
+		select * from tb_seocoo_payment
+		<dynamic prepend="where">
+			<isNotEmpty prepend=" and " property="id">
+				id = #id#
+	      </isNotEmpty>
+			<isNotEmpty prepend=" and " property="paymentCode">
+				paymentCode = #paymentCode#
+	      </isNotEmpty>
+	      <isNotEmpty prepend=" and " property="terminalType">
+				terminalType = #terminalType#
+	      </isNotEmpty>
+		</dynamic>
+	</select>
+	
+
+	<update id="update" parameterClass="PaymentEntity">
+		update tb_seocoo_payment
+		<dynamic prepend="set">
+			<isNotEmpty prepend=" , " property="paymentCode">
+				paymentCode = #paymentCode#
+	      </isNotEmpty>
+	      	<isNotEmpty prepend=" , " property="paymentName">
+				paymentName = #paymentName#
+	      </isNotEmpty>
+	      	<isNotEmpty prepend=" , " property="paymentUrl">
+				paymentUrl = #paymentUrl#
+	      </isNotEmpty>
+	      	<isNotEmpty prepend=" , " property="paymentDesc">
+				paymentDesc = #paymentDesc#
+	      </isNotEmpty>
+	      	<isNotEmpty prepend=" , " property="terminalType">
+				terminalType = #terminalType#
+	      </isNotEmpty>
+		</dynamic>
+		where id = #id#
+	</update>
+	
+	<insert id="insert" parameterClass="PaymentEntity">
+		insert into tb_seocoo_payment(paymentCode,paymentName,paymentUrl,paymentDesc,terminalType)
+			 values(#paymentCode#,#paymentName#,#paymentUrl#,#paymentDesc#,#terminalType#)
+	</insert>
+	
+	<delete id="delete" parameterClass="PaymentEntity">
+		delete from tb_seocoo_payment
+		<dynamic prepend="where">
+		  <isNotEmpty prepend=" and " property="id">
+				id = #id#
+	      </isNotEmpty>
+		</dynamic>
+	</delete>
+	
+
+</sqlMap>

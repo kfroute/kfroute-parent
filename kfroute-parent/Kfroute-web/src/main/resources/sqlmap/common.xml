@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE sqlMap PUBLIC "-//iBATIS.com//DTD SQL Map 2.0//EN" "http://ibatis.apache.org/dtd/sql-map-2.dtd">
+
+<sqlMap namespace="routerCommon">
+	<typeAlias alias="selectFormBean" type="cn.melinkr.platform.kfroute.SelectFormBean" />
+	<typeAlias alias="loginOpr" type="cn.melinkr.platform.kfroute.LoginOpr" />
+	<resultMap id="selectFormBeanMap" class="selectFormBean">
+		<result column="value" property="value"/>
+		<result column="name" property="name"/>
+	</resultMap>
+	
+
+	<select id="findAgent" parameterClass="Map" resultMap="selectFormBeanMap">
+		select group_id as value,group_name as name
+		 from ssobase.dchngroupmsg 
+			where parent_group_id_list like concat((
+					select concat(PARENT_GROUP_ID_LIST,group_id,'/') from ssobase.dchngroupmsg where 
+						group_id = (select group_id from ssobase.dloginmsg where login_no=#loginNo#)),'%')
+		 order by parent_group_id_list
+	</select>
+	<select id="findAllAgent" parameterClass="Map" resultMap="selectFormBeanMap">
+		select group_id as value,group_name as name
+		 from ssobase.dchngroupmsg
+		  order by parent_group_id_list
+	</select>
+	<select id="findAllServerGroup" parameterClass="Map" resultMap="selectFormBeanMap">
+		select group_id as value,group_name as name
+		 from dserverbelonggroup
+		  order by group_id
+	</select>
+	<insert id="insertLoginOpr" parameterClass="loginOpr">
+		INSERT INTO
+		wloginopr$yearMonth$
+		(
+			be_oper_type,
+			be_oper_obj,
+			oper_name,
+			oper_code,
+			oper_ip,
+			pay_type,
+			pay_money,
+			oper_type,
+			oper_time,
+			oper_note,
+			oper_date
+		)
+		VALUES
+		(
+			#beOperType#,
+			#beOperObj#,
+			#operName#,
+			#operCode#,
+			#operIp#,
+			#payType#,
+			#payMoney#,
+			#operType#,
+			#operTime#,
+			#operNote#,
+			#operDate#
+		)
+	</insert>
+</sqlMap>

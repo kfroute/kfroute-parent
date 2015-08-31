@@ -1,0 +1,118 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:aop="http://www.springframework.org/schema/aop"
+	xmlns:tx="http://www.springframework.org/schema/tx"
+	xsi:schemaLocation="
+			http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-2.5.xsd
+			http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop-2.5.xsd
+			http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx-2.5.xsd">
+
+	<bean id="envPropertyLocator"
+		class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer">
+		<property name="fileEncoding" value="UTF-8"></property>
+		<property name="locations">
+			<list>
+				<value>classpath*:cache.properties</value>
+			</list>
+		</property>
+	</bean>
+
+	<!-- 开发环境用的ds -->
+	<!-- <bean id="dataSource" class="org.apache.commons.dbcp.BasicDataSource"> 
+		<property name="driverClassName" value="com.mysql.jdbc.Driver" /> <property 
+		name="url" value="jdbc:mysql://127.0.0.1:3306/kfroute?autoReconnect=true&amp;failOverReadOnly=false&amp;useUnicode=true&amp;characterEncoding=utf-8" 
+		/> <property name="username" value="root" /> <property name="password" value="198890" 
+		/> <property name="initialSize" value="5" /> <property name="maxActive" value="20" 
+		/> <property name="maxIdle" value="10" /> <property name="minIdle" value="2" 
+		/> </bean> -->
+	<!-- 正式环境ds -->
+	<bean id="dataSource" class="org.apache.commons.dbcp.BasicDataSource">
+		<property name="driverClassName" value="com.mysql.jdbc.Driver" />
+		<property name="url"
+			value="jdbc:mysql://114.215.128.113:3306/kfroute?autoReconnect=true&amp;failOverReadOnly=false&amp;useUnicode=true&amp;characterEncoding=utf-8" />
+		<property name="username" value="dbkfroute" />
+		<property name="password" value="romater_kfroute2015" />
+		<property name="initialSize" value="5" />
+		<property name="maxActive" value="100" />
+		<property name="maxIdle" value="10" />
+		<property name="minIdle" value="5" />
+
+	</bean>
+
+
+	<bean id="transactionManager"
+		class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
+		<property name="dataSource" ref="dataSource" />
+	</bean>
+
+	<bean id="sqlMapClient" class="org.springframework.orm.ibatis.SqlMapClientFactoryBean">
+		<property name="configLocation" value="classpath:ibatis-default.xml" />
+		<property name="dataSource" ref="dataSource" />
+	</bean>
+
+	<bean id="sqlClient" class="org.springframework.orm.ibatis.SqlMapClientTemplate">
+		<property name="sqlMapClient">
+			<ref local="sqlMapClient" />
+		</property>
+	</bean>
+
+
+	<!-- baseDao -->
+	<bean id="baseDao" class="com.melinkr.micro.dao.common.BaseDao">
+		<property name="sqlMapClient" ref="sqlMapClient" />
+	</bean>
+
+	<!-- Service父类 EntityManagerImpl配置 -->
+	<bean id="entityIbaDao" class="com.tydic.framework.base.dao.IbatisEntityDao">
+		<property name="sqlMapClient" ref="sqlMapClient" />
+	</bean>
+	<bean id="entityManagerImpl" class="com.tydic.framework.base.dao.EntityManagerImpl">
+		<property name="entityDao" ref="entityIbaDao" />
+	</bean>
+
+	<aop:config>
+		<aop:advisor pointcut="execution(* cn.melinkr.kfrouteWeb.*.*(..))"
+			advice-ref="txAdvice" />
+	</aop:config>
+	<!-- 事务切面 -->
+	<tx:advice id="txAdvice" transaction-manager="transactionManager">
+		<tx:attributes>
+			<tx:method name="add*" propagation="REQUIRED" rollback-for="Exception" />
+			<tx:method name="save*" propagation="REQUIRED"
+				rollback-for="Exception" />
+			<tx:method name="insert*" propagation="REQUIRED"
+				rollback-for="Exception" />
+			<tx:method name="update*" propagation="REQUIRED"
+				rollback-for="Exception" />
+			<tx:method name="del*" propagation="REQUIRED" rollback-for="Exception" />
+			<tx:method name="remove*" propagation="REQUIRED"
+				rollback-for="Exception" />
+			<tx:method name="*" read-only="true" />
+		</tx:attributes>
+	</tx:advice>
+	<bean id="logDao" class="cn.melinkr.kfrouteWeb.business.dao.impl.LogDaoImpl"  parent="entityManagerImpl">
+	</bean>
+	<bean id="logService"
+		class="cn.melinkr.kfrouteWeb.business.service.impl.LogServiceImpl">
+		<property name="logDao" ref="logDao" />	
+	</bean>
+	
+	<aop:config>
+		<!-- 切入点 -->
+		<aop:pointcut
+			expression="execution(* cn.melinkr.kfrouteWeb.business..service.impl.*.add*(..))||
+           				execution(* cn.melinkr.kfrouteWeb.business..service.impl.*.save*(..))||
+           				execution(* cn.melinkr.kfrouteWeb.business..service.impl.*.insert*(..))||
+            			execution(* cn.melinkr.kfrouteWeb.business..service.impl.*.update*(..))||
+            			execution(* cn.melinkr.kfrouteWeb.business..service.impl.*.del*(..))||
+           				execution(* cn.melinkr.kfrouteWeb.business..service.impl.*.remove*(..))"
+			id="kfroutePointcut" />
+		<!-- 切面： 将哪个对象中的哪个方法，织入到哪个切入点 -->
+		<aop:aspect id="dd" ref="logService">
+			<!-- 前置通知 <aop:before method="log" pointcut-ref="myPointcut" /> <aop:after 
+				method="logArg" pointcut-ref="myPointcut"> -->
+			<aop:after-returning method="logArgAndReturn"
+				returning="returnObj" pointcut-ref="kfroutePointcut" />
+		</aop:aspect>
+	</aop:config>
+</beans>

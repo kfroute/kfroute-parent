@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE sqlMap PUBLIC "-//iBATIS.com//DTD SQL Map 2.0//EN" "http://ibatis.apache.org/dtd/sql-map-2.dtd">
+
+<sqlMap namespace="PayInfo">
+	<typeAlias alias="PayInfo" type="cn.seocoo.platform.payment.PayInfo" />
+	
+	<insert id="savePayInfo" parameterClass="PayInfo">
+		INSERT INTO tb_seocoo_order_pay_info
+		  (
+		   orderNumber,
+		   transSeq,
+		   retnISeq,
+		   totalPrice,
+		   merchantCode,
+		   payStatus,
+		   paydate,
+		   callbackDate,
+		   platformOrderNumber
+		   )
+		VALUES
+		  (
+		   #orderNumber#,
+		   #transSeq#,
+		   #retnISeq#,
+		   #totalPrice#,
+		   #merchantCode#,
+		   #payStatus#,
+		   #paydate#,
+		   #callbackDate#,
+		   #platformOrderNumber#
+		   )
+	</insert>
+	
+	<update id="updatePayInfo" parameterClass="PayInfo">
+		update tb_seocoo_order_pay_info
+		<dynamic prepend="set">
+			<isNotEmpty prepend=" , " property="transSeq">
+				transSeq = #transSeq#
+			</isNotEmpty>
+			<isNotEmpty prepend=" , " property="retnISeq">
+				retnISeq = #retnISeq#
+			</isNotEmpty>
+			<isNotEmpty prepend=" , " property="totalPrice">
+				totalPrice = #totalPrice#
+			</isNotEmpty>
+			<isNotEmpty prepend=" , " property="merchantCode">
+				merchantCode = #merchantCode#
+			</isNotEmpty>
+			<isNotEmpty prepend=" , " property="payStatus">
+				payStatus = #payStatus#
+			</isNotEmpty>
+			<isNotEmpty prepend=" , " property="paydate">
+				paydate = #paydate#
+			</isNotEmpty>
+			<isNotEmpty prepend=" , " property="callbackDate">
+				callbackDate = #callbackDate#
+			</isNotEmpty>
+		</dynamic>
+		<dynamic prepend="where">
+			<isNotEmpty prepend=" and " property="orderNumber">
+				orderNumber = #orderNumber#
+	        </isNotEmpty>
+	        <isNotEmpty prepend=" and " property="platformOrderNumber">
+				platformOrderNumber = #platformOrderNumber#
+	        </isNotEmpty>
+		</dynamic>
+	</update>
+	
+</sqlMap>

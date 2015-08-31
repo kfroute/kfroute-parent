@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE sqlMap PUBLIC "-//iBATIS.com//DTD SQL Map 2.0//EN" "http://ibatis.apache.org/dtd/sql-map-2.dtd">
+
+<sqlMap namespace="routerMsgLog">
+	<typeAlias alias="wRoutersyslog" type="cn.melinkr.platform.kfroute.RouterSysLog" />
+	
+	<insert id="insertWroutersyslog" parameterClass="wRoutersyslog">
+		INSERT INTO wroutersyslog
+		  (
+		    mac,
+			wan_ip ,
+			startup_timestamp,
+			remained_ram,
+			resource_ip,
+			resource_port,
+			client_conn_num,
+			request_url_num,
+			total_traffic,
+			total_foreign_traffic,
+			prev_traffic,
+			prev_total_foreign_traffic,
+			circle_total_traffic,
+			circle_foreign_total_traffic
+		   )
+		VALUES
+		  (
+		   #mac#,
+		   #wanIp#,
+		   #startupTimestamp#,
+		   #remainedRam#,
+		   #resourceIp#,
+		   #resourcePort#,
+		   #clientConnNum#,
+		   #requestUrlNum#,
+		   #totalTraffic#,
+		   #totalForeignTraffic#,
+		   #prevTraffic#,
+		   #prevTotalForeignTraffic#,
+		   #circleTotalTraffic#,
+		   #circleForeignTotalTraffic#
+		   )
+	</insert>
+	
+	
+	
+</sqlMap>

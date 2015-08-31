@@ -1,0 +1,290 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE sqlMap PUBLIC "-//iBATIS.com//DTD SQL Map 2.0//EN" "http://ibatis.apache.org/dtd/sql-map-2.dtd">
+
+<sqlMap namespace="routerUseMsg">
+	<typeAlias alias="routerUseMsg" type="cn.melinkr.platform.kfroute.RouterUseMsg" />
+	<typeAlias alias="routerUseMsgHis" type="cn.melinkr.platform.kfroute.RouterUseMsgHis" />
+	<typeAlias alias="routerMsg" type="cn.melinkr.platform.kfroute.RouterMsg" />
+	<typeAlias alias="serverPortUseMsg" type="cn.melinkr.platform.kfroute.ServerPortUseMsg" />
+	<typeAlias alias="serverPortUseMsgHis" type="cn.melinkr.platform.kfroute.ServerPortUseMsgHis" />
+	<resultMap id="routerUseMsgMap" class="routerUseMsg">
+		<result column="use_id" property="useId" />
+		<result column="router_id" property="routerId" />
+		<result column="mac" property="mac" />
+		<result column="active_time" property="activeTime" />
+		<result column="online_timestamp" property="onlineTimestamp" />
+		<result column="longitude" property="longitude" />
+		<result column="latitude" property="latitude" />
+		<result column="wan_ip" property="wanIp" />
+		<result column="real_ip" property="realIp" />
+		<result column="resource_ip" property="resourceIp" />
+		<result column="resource_port" property="resourcePort" />
+		<result column="ping_val" property="pingVal" />
+		<result column="pkg_loss_rate" property="pkgLossRate" />
+		<result column="speed" property="speed" />
+		<result column="total_traffic" property="totalTraffic" />
+		<result column="total_foreign_traffic" property="totalForeignTraffic" />
+		<result column="run_status" property="runStatus" />
+		<result column="offline_timestamp" property="offlineTimestamp" />
+		<result column="update_timestamp" property="updateTimestamp" />
+
+	</resultMap>
+
+	<resultMap id="routerMsgMap" class="routerMsg">
+		<result column="r_id_no" property="rIdNo"/>
+		<result column="mac" property="mac"/>
+		<result column="model_type" property="modelType"/>
+		<result column="version" property="version"/>
+		<result column="group_id" property="groupId"/>
+		<result column="belong_type" property="belongType"/>
+		<result column="chip_model" property="chipModel"/>
+		<result column="basic_freq" property="basicFreq"/>
+		<result column="ram" property="ram"/>
+		<result column="flash" property="flash"/>
+		<result column="brand_name" property="brandName"/>
+		<result column="update_timestamp" property="updateTimestamp"/>
+		<result column="update_obj" property="updateObj"/>
+		<result column="create_timestamp" property="createTimestamp"/>
+		<result column="create_accept" property="createAccept"/>
+		<result column="note" property="note"/>
+		<result column="op_note" property="opNote"/>
+
+	</resultMap>
+	
+	<insert id="insertUseRouterMsg" parameterClass="routerUseMsg">
+		INSERT INTO
+		drouterusemsg
+		(
+		router_id,
+		mac,
+		active_time,
+		online_timestamp,
+		longitude,
+		latitude,
+		wan_ip,
+		real_ip,
+		resource_ip,
+		resource_port,
+		ping_val,
+		pkg_loss_rate,
+		speed,
+		total_traffic,
+		total_foreign_traffic,
+		run_status,
+		offline_timestamp,
+		update_timestamp
+		)
+		VALUES
+		(
+		#routerId#,
+		#mac#,
+		#activeTime#,
+		#onlineTimestamp#,
+		#longitude#,
+		#latitude#,
+		#wanIp#,
+		#realIp#,
+		#resourceIp#,
+		#resourcePort#,
+		#pingVal#,
+		#pkgLossRate#,
+		#speed#,
+		#totalTraffic#,
+		#totalForeignTraffic#,
+		#runStatus#,
+		#offlineTimestamp#,
+		#updateTimestamp#
+		)
+	</insert>
+	<insert id="insertUseRouterMsgHis" parameterClass="routerUseMsgHis">
+		INSERT INTO
+		drouterusemsghis$yearMonth$
+		(
+		router_id,
+		mac,
+		active_time,
+		online_timestamp,
+		longitude,
+		latitude,
+		wan_ip,
+		real_ip,
+		resource_ip,
+		resource_port,
+		ping_val,
+		pkg_loss_rate,
+		speed,
+		total_traffic,
+		total_foreign_traffic,
+		run_status,
+		offline_timestamp,
+		update_timestamp,
+		his_time,
+		his_note,
+		his_type
+		)
+		VALUES
+		(
+		#routerUseMsg.routerId#,
+		#routerUseMsg.mac#,
+		#routerUseMsg.activeTime#,
+		#routerUseMsg.onlineTimestamp#,
+		#routerUseMsg.longitude#,
+		#routerUseMsg.latitude#,
+		#routerUseMsg.wanIp#,
+		#routerUseMsg.realIp#,
+		#routerUseMsg.resourceIp#,
+		#routerUseMsg.resourcePort#,
+		#routerUseMsg.pingVal#,
+		#routerUseMsg.pkgLossRate#,
+		#routerUseMsg.speed#,
+		#routerUseMsg.totalTraffic#,
+		#routerUseMsg.totalForeignTraffic#,
+		#routerUseMsg.runStatus#,
+		#routerUseMsg.offlineTimestamp#,
+		#routerUseMsg.updateTimestamp#,
+		#hisTime#,
+		#hisNote#,
+		#hisType#
+		)
+	</insert>
+	<select id="queryUseRouterMsg" parameterClass="Map" resultMap="routerUseMsgMap">
+		select a.*
+		from drouterusemsg as a
+		where a.mac = #mac#
+	</select>
+	<select id="queryBaseRouterMsg" parameterClass="Map" resultMap="routerMsgMap">
+		select * from droutermsg
+		<dynamic prepend="where">
+			<isNotEmpty prepend=" and " property="mac">
+				mac = #mac#
+	     	</isNotEmpty>
+		</dynamic>
+		limit 1
+	</select>
+	<update id="updateUseRouterMsg" parameterClass="routerUseMsg">
+		update drouterusemsg
+		<dynamic prepend="set">
+			offline_timestamp=#offlineTimestamp#,
+			<isNotEmpty prepend=" , " property="useId">use_id =#useId#
+			</isNotEmpty>
+			<isNotEmpty prepend=" , " property="routerId">router_id=#routerId#
+			</isNotEmpty>
+			<isNotEmpty prepend=" , " property="mac">mac=#mac#</isNotEmpty>
+			<isNotEmpty prepend=" , " property="activeTime">active_time=#activeTime#
+			</isNotEmpty>
+			<isNotEmpty prepend=" , " property="onlineTimestamp">online_timestamp=#onlineTimestamp#
+			</isNotEmpty>
+			<isNotEmpty prepend=" , " property="longitude">longitude=#longitude#
+			</isNotEmpty>
+			<isNotEmpty prepend=" , " property="latitude">latitude=#latitude#
+			</isNotEmpty>
+			<isNotEmpty prepend=" , " property="wanIp">wan_ip=#wanIp#
+			</isNotEmpty>
+			<isNotEmpty prepend=" , " property="realIp">real_ip=#realIp#
+			</isNotEmpty>
+			<isNotEmpty prepend=" , " property="resourceIp">resource_ip=#resourceIp#
+			</isNotEmpty>
+			<isNotEmpty prepend=" , " property="resourcePort">resource_port=#resourcePort#
+			</isNotEmpty>
+			<isNotEmpty prepend=" , " property="pingVal">ping_val=#pingVal#
+			</isNotEmpty>
+			<isNotEmpty prepend=" , " property="pkgLossRate">pkg_loss_rate=#pkgLossRate#
+			</isNotEmpty>
+			<isNotEmpty prepend=" , " property="speed">speed=#speed#
+			</isNotEmpty>
+			<isNotEmpty prepend=" , " property="totalTraffic">total_traffic=#totalTraffic#
+			</isNotEmpty>
+			<isNotEmpty prepend=" , " property="totalForeignTraffic">total_foreign_traffic=#totalForeignTraffic#
+			</isNotEmpty>
+			<isNotEmpty prepend=" , " property="runStatus">run_status=#runStatus#
+			</isNotEmpty>
+			<isNotEmpty prepend=" , " property="updateTimestamp">update_timestamp=#updateTimestamp#
+			</isNotEmpty>
+
+
+		</dynamic>
+		where mac = #mac#
+	</update>
+	<select id="queryUseServerPortMsg" parameterClass="Map" resultClass="serverPortUseMsg">
+		select a.s_log_id as sLogId,
+			   a.server_ip as serverIp,
+			   a.server_port as serverPort,
+			   a.port_status as portStatus,
+			   a.open_timestamp as openTimestamp,
+			   a.close_timestamp as closeTimestamp
+		from dserverportusemsg as a
+		where a.server_ip = #serverIp#
+			and a.server_port = #serverPort#
+	</select>
+	<insert id="insertUseServerPortMsg" parameterClass="serverPortUseMsg">
+		INSERT INTO
+		dserverportusemsg
+		(
+			server_id,
+			server_ip,
+			server_port,
+			port_total_outgoing,
+			port_total_incoming,
+			port_status,
+			open_timestamp,
+			close_timestamp,
+			port_update_time_stamp
+
+		)
+		VALUES
+		(
+			#serverId#,
+			#serverIp#,
+			#serverPort#,
+			#portTotalOutgoing#,
+			#portTotalIncoming#,
+			#portStatus#,
+			#openTimestamp#,
+			#closeTimestamp#,
+			#portUpdateTimestamp#
+		)
+	</insert>
+	<insert id="insertUseServerPortMsgHis" parameterClass="serverPortUseMsgHis">
+		INSERT INTO
+		dserverportusemsghis$yearMonth$
+		(
+			server_id,
+			server_ip,
+			server_port,
+			port_total_outgoing,
+			port_total_incoming,
+			port_status,
+			open_timestamp,
+			close_timestamp,
+			port_update_time_stamp,
+			his_time,
+			his_note,
+			his_type
+
+		)
+		VALUES
+		(
+			#serverPortUseMsg.serverId#,
+			#serverPortUseMsg.serverIp#,
+			#serverPortUseMsg.serverPort#,
+			#serverPortUseMsg.portTotalOutgoing#,
+			#serverPortUseMsg.portTotalIncoming#,
+			#serverPortUseMsg.portStatus#,
+			#serverPortUseMsg.openTimestamp#,
+			#serverPortUseMsg.closeTimestamp#,
+			#serverPortUseMsg.portUpdateTimestamp#,
+			#hisTime#,
+			#hisNote#,
+			#hisType#
+		)
+	</insert>
+	<update id="updateServerPortUseMsg" parameterClass="serverPortUseMsg">
+		update dserverportusemsg
+		set open_timestamp=#openTimestamp#,
+			close_timestamp=#closeTimestamp#,
+			port_total_outgoing =#portTotalOutgoing#,
+			port_total_incoming=#portTotalIncoming#,
+			port_status=#portStatus#
+		where server_ip = #serverIp# and server_port=#serverPort#
+	</update>
+</sqlMap>

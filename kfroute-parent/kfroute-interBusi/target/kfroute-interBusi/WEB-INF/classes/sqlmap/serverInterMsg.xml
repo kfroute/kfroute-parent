@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE sqlMap PUBLIC "-//iBATIS.com//DTD SQL Map 2.0//EN" "http://ibatis.apache.org/dtd/sql-map-2.dtd">
+
+<sqlMap namespace="serverInterMsg">
+	<typeAlias alias="serverShadowSocksBean" type="cn.melinkr.platform.kfroute.ServerShadowSocksBean" />
+	<typeAlias alias="sourceServerPortMsg"
+		type="cn.melinkr.platform.kfroute.SourceServerPortMsg" />
+	<typeAlias alias="serverAvailableIp"
+		type="cn.melinkr.platform.kfroute.ServerAvailableIp" />
+	
+	<resultMap id="serverShadowSocksBeanMap" class="serverShadowSocksBean">
+		<result column="ip_address" property="server" />
+		<result column="local_address" property="local_address" />
+		<result column="local_port" property="local_port" />
+		<result column="timeout" property="timeout" />
+		<result column="method" property="method" />
+		<result column="fast_open" property="fast_open" />
+	</resultMap>
+	<resultMap id="sourceServerPortMsgMap" class="sourceServerPortMsg">
+		<result column="relation_id" property="relationId" />
+		<result column="source_id" property="sourceId" />
+		<result column="source_ip" property="sourceIp" />
+		<result column="port" property="port" />
+		<result column="password" property="password" />
+		<result column="use_flag" property="useFlag" />
+		<result column="time_out" property="timeOut" />
+		<result column="update_time" property="updateTime" />
+		<result column="update_desc" property="updateDesc" />
+		<result column="run_status" property="runStatus" />
+		<result column="active_time" property="activeTime" />
+	</resultMap>
+	<select id="findServerShadowSockMsg" parameterClass="Map" resultMap="serverShadowSocksBeanMap">
+		select  '0.0.0.0' ip_address,
+				b.local_address,
+				b.local_port,
+				b.timeout,
+				b.method,
+				b.fast_open
+		from dsourceservermsg a,wshadowsocks b
+		where a.shadow_socks_id = b.sds_id 
+			and a.ip_address = #serverIp#
+	</select>
+	<select id="findServerShadowSockPortMsg" parameterClass="Map" resultMap="sourceServerPortMsgMap">
+		select  *
+		from ssourseservportmsg a
+		where a.source_ip = #serverIp#
+	</select>
+	<select id="findUsableServerShadowSockPortMsg" parameterClass="Map" resultMap="sourceServerPortMsgMap">
+		select c.relation_id,c.source_id,c.source_ip,c.port,c.password,c.use_flag,
+			c.time_out,c.update_time,c.update_desc,c.run_status,c.active_time
+			 from (
+			select a.*,b.port_status 
+			from  ssourseservportmsg a left join dserverportusemsg b  
+			on a.source_ip = b.server_ip and a.port = b.server_port
+			where a.source_ip=#serverIp# )
+			 as c where (port_status=0 or port_status is null)
+	</select>
+	<select id="findServerAvailableIp" parameterClass="Map" resultClass="serverAvailableIp">
+		select ip_address as serverIp,longitude,latitude,belong_group as belongGroup from(
+			select  a.ip_address,longitude,latitude,belong_group,count(*) usable_port_num
+					from dsourceservermsg a,(
+						select a.*,b.port_status from
+						  ssourseservportmsg a left join dserverportusemsg b  
+							on a.source_ip = b.server_ip
+							and a.port = b.server_port) c
+					where a.ip_address = c.source_ip
+					and a.sys_status=1
+					and (c.port_status=0 or c.port_status is null)
+			group by ip_address
+		) as d where d.usable_port_num>0
+	</select>
+</sqlMap>
